@@ -1,19 +1,20 @@
+pub use std::collections::HashMap;
 use std::f32::consts::LOG2_E;
+use std::hash::BuildHasherDefault;
+use fnv::FnvHasher;
 
 pub type FreeEnergy = f32;
 pub type Base = u8;
 pub type BasePair = (Base, Base);
+pub type Hasher = BuildHasherDefault<FnvHasher>;
 
-pub const MIN_HAIRPIN_LOOP_LEN: usize = 3;
-pub const MIN_SPAN_OF_INDEX_PAIR_CLOSING_HAIRPIN_LOOP: usize = MIN_HAIRPIN_LOOP_LEN + 2;
 pub const MAX_2LOOP_LEN: usize = 30;
 pub const MAX_SPAN_OF_INDEX_PAIR_CLOSING_2LOOP: usize = MAX_2LOOP_LEN + 2;
 pub const GAS_CONST: FreeEnergy = 1.98717;
 pub const K0: FreeEnergy = 273.15;
-pub const TEMPARATURE: FreeEnergy = 37. + K0;
-pub const MAX_LOOP_LEN_4_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE: usize = 10_000;
-pub const KL: FreeEnergy = 1000.;
-pub const INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = 4.09;
+pub const TEMPERATURE: FreeEnergy = 37. + K0;
+pub const MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE: usize = 10_000;
+pub const KILO: FreeEnergy = 1000.;
 pub const A: Base = 'A' as Base;
 pub const C: Base = 'C' as Base;
 pub const G: Base = 'G' as Base;

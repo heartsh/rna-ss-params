@@ -1,29 +1,34 @@
 use utils::*;
-use std::collections::HashMap;
-use std::hash::BuildHasherDefault;
-use fnv::FnvHasher;
 
-pub type InitInternalLoopDeltaFes = Vec<FreeEnergy>;
-type Hasher = BuildHasherDefault<FnvHasher>;
-pub type Init1Vs1InternalLoopDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
-pub type OneVs2InternalLoop = (BasePair, Base);
-pub type Init1Vs2InternalLoopDeltaFes = HashMap<(BasePair, OneVs2InternalLoop, BasePair), FreeEnergy, Hasher>;
-pub type TwoVs2InternalLoop = (BasePair, BasePair);
-pub type Init2Vs2InternalLoopDeltaFes = HashMap<(BasePair, TwoVs2InternalLoop, BasePair), FreeEnergy, Hasher>;
+pub type InitIlDeltaFes = Vec<FreeEnergy>;
+pub type IlTerminalMismatchBonusDeltaFes = HashMap<BasePair, FreeEnergy, Hasher>;
+pub type Init1Vs1IlDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
+pub type OneVs2Il = (BasePair, Base);
+pub type Init1Vs2IlDeltaFes = HashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy, Hasher>;
+pub type TwoVs2Il = (BasePair, BasePair);
+pub type Init2Vs2IlDeltaFes = HashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy, Hasher>;
 
-pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_INTERNAL_LOOP_DELTA_FE: usize = 7;
-pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_INTERNAL_LOOP_DELTA_FE: FreeEnergy = 1.08;
+pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: usize = 7;
+pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = 1.08;
+pub const IL_ASYMMETRY_PENALTY_DELTA_FE: FreeEnergy = 0.6;
+pub const AU_OR_GU_CLOSURE_PENALTY_DELTA_FE: FreeEnergy = 0.7;
 lazy_static! {
-  pub static ref INIT_INTERNAL_LOOP_DELTA_FES: InitInternalLoopDeltaFes = {
-    let mut init_internal_loop_delta_fes = vec![0., 0., 0., 0., 1.1, 2.0, 2.0, 2.1, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.9, 3.0, 3.1, 3.1, 3.2, 3.3, 3.3, 3.4, 3.4, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7];
-    let len_of_init_internal_loop_delta_fes = init_internal_loop_delta_fes.len();
-    let basic_init_internal_loop_delta_fe = init_internal_loop_delta_fes[MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_INTERNAL_LOOP_DELTA_FE - 1];
-    for i in len_of_init_internal_loop_delta_fes .. MAX_LOOP_LEN_4_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE {
-      init_internal_loop_delta_fes.push((basic_init_internal_loop_delta_fe + COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_INTERNAL_LOOP_DELTA_FE * fast_ln(i as FreeEnergy / (MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_INTERNAL_LOOP_DELTA_FE - 1) as FreeEnergy)) / KL);
-    }
-    init_internal_loop_delta_fes
+  pub static ref TWO_VS_3_IL_TERMINAL_MISMATCH_BONUS_DELTA_FES: IlTerminalMismatchBonusDeltaFes = {
+    [(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)].iter().cloned().collect()
   };
-  pub static ref INIT_1_VS_1_INTERNAL_LOOP_DELTA_FES: Init1Vs1InternalLoopDeltaFes = {
+  pub static ref OTHER_IL_TERMINAL_MISMATCH_BONUS_DELTA_FES: IlTerminalMismatchBonusDeltaFes = {
+    [(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)].iter().cloned().collect()
+  };
+  pub static ref INIT_IL_DELTA_FES: InitIlDeltaFes = {
+    let mut init_il_delta_fes = vec![0., 0., 0., 0., 1.1, 2.0, 2.0];
+    let len_of_init_il_delta_fes = init_il_delta_fes.len();
+    let basic_init_il_delta_fe = init_il_delta_fes[MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE - 1];
+    for i in len_of_init_il_delta_fes .. MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE {
+      init_il_delta_fes.push(basic_init_il_delta_fe + (COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE * fast_ln(i as FreeEnergy / (MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE - 1) as FreeEnergy)) / KILO);
+    }
+    init_il_delta_fes
+  };
+  pub static ref INIT_1_VS_1_IL_DELTA_FES: Init1Vs1IlDeltaFes = {
     [
       // For internal pairs behind the base pair "AU".
       // For internal pairs between the base pairs "AU" and "AU".
@@ -213,7 +218,7 @@ lazy_static! {
       ((UG, UA, UG), 1.9), ((UG, UC, UG), 1.9), ((UG, UG, UG), 1.9), ((UG, UU, UG), 1.6),
     ].iter().cloned().collect()
   };
-  pub static ref INIT_1_VS_2_INTERNAL_LOOP_DELTA_FES: Init1Vs2InternalLoopDeltaFes = {
+  pub static ref INIT_1_VS_2_IL_DELTA_FES: Init1Vs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
@@ -943,7 +948,7 @@ lazy_static! {
       ((UG, (UG, U), UG), 3.0), ((UG, (UC, U), UG), 3.0), ((UG, (UG, U), UG), 3.0), ((UG, (UU, U), UG), 3.0),
     ].iter().cloned().collect()
   };
-    pub static ref INIT_2_VS_2_INTERNAL_LOOP_DELTA_FES: Init2Vs2InternalLoopDeltaFes = {
+    pub static ref INIT_2_VS_2_IL_DELTA_FES: Init2Vs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".

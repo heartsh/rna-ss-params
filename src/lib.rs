@@ -11,4 +11,4 @@ pub mod hairpin_loop_params;
 pub mod internal_loop_params;
 pub mod multibranch_loop_params;
 pub mod terminal_mismatch_params;
-pub mod watsoncrick_helix_params;
+pub mod helix_params;

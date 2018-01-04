@@ -1,4 +1,4 @@
-# "rna-ss-params", library of set of RNA secondary structure parameters
+# "rna-ss-params", Library of Set of RNA Secondary-structure Parameters
 This library provides a set of RNA secondary structure (= SS) parameters.
 This set is of the [Turner 2004 model](https://rna.urmc.rochester.edu/NNDB/turner04/index.html), the latest nearest neighbor model of RNA SS free energy and enthalpy.
 
