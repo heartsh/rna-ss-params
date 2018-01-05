@@ -7,6 +7,7 @@ pub type FreeEnergy = f32;
 pub type Base = u8;
 pub type BasePair = (Base, Base);
 pub type Hasher = BuildHasherDefault<FnvHasher>;
+pub type Seq = Vec<Base>;
 
 pub const MAX_2LOOP_LEN: usize = 30;
 pub const MAX_SPAN_OF_INDEX_PAIR_CLOSING_2LOOP: usize = MAX_2LOOP_LEN + 2;
