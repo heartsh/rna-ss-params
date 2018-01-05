@@ -5,7 +5,7 @@ authors = ["heartsh <heartsh@heartsh.io>"]
 description = "RNA secondary-structure parameters"
 repository = "https://github.com/heartsh/rna-ss-prms"
 readme = "README.md"
-keywords = ["bioinformatics", "rna", "secondary structure"]
+keywords = ["bioinformatics", "rna", "secondary-structure"]
 license = "MIT"
 
 [dependencies]
