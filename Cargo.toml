@@ -1,6 +1,6 @@
 [package]
 name = "rna-ss-params"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["heartsh <heartsh@heartsh.io>"]
 description = "RNA secondary-structure parameters"
 repository = "https://github.com/heartsh/rna-ss-prms"
