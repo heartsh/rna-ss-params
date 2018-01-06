@@ -1,7 +1,7 @@
 use utils::*;
 
 pub type InitHlDeltaFes = Vec<FreeEnergy>;
-pub type SpecialHlDeltaFes = HashMap<Seq, FreeEnergy>;
+pub type SpecialHlDeltaFes = HashMap<Seq, FreeEnergy, Hasher>;
 
 pub const MIN_HL_LEN: usize = 3;
 pub const MIN_SPAN_OF_INDEX_PAIR_CLOSING_HL: usize = MIN_HL_LEN + 2;
