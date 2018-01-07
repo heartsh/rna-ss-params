@@ -4,6 +4,7 @@ pub type InitBlFes = Vec<FreeEnergy>;
 
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_BL_DELTA_FE: usize = 7;
 pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_BL_DELTA_FE: FreeEnergy = 1.75 * GAS_CONST * TEMPERATURE;
+pub const BL_SPECIAL_C_BULGE_BONUS_DELTA_FE: FreeEnergy = -0.9;
 lazy_static! {
   pub static ref INIT_BL_DELTA_FES: InitBlFes = {
     let mut init_bl_delta_fes = vec![0., 3.8, 2.8, 3.2, 3.6, 4.0, 4.4];

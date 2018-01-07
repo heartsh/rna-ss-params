@@ -1,13 +1,13 @@
 use utils::*;
 
-pub type SDeltaFes = HashMap<(BasePair, BasePair), FreeEnergy, Hasher>;
+pub type StackDeltaFes = HashMap<(BasePair, BasePair), FreeEnergy, Hasher>;
 
-pub const INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = 4.09;
-pub const AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = 0.45;
-pub const SYMMETRY_PENALTY_DELTA_FE: FreeEnergy = 0.43;
+pub const HELIX_INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = 4.09;
+pub const HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = 0.45;
+pub const HELIX_SYMMETRY_PENALTY_DELTA_FE: FreeEnergy = 0.43;
 
 lazy_static! {
-  pub static ref S_DELTA_FES: SDeltaFes = {
+  pub static ref STACK_DELTA_FES: StackDeltaFes = {
     [
       // For the base pair "AU" against which another base pair is stacked.
       ((AU, AU), -0.9), ((AU, CG), -2.2), ((AU, GC), -2.1), ((AU, GU), -0.6), ((AU, UA), -1.1), ((AU, UG), -1.4), 
