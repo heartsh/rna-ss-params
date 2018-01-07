@@ -2,11 +2,11 @@ use utils::*;
 
 pub type InitIlDeltaFes = Vec<FreeEnergy>;
 pub type IlTmBonusDeltaFes = HashMap<BasePair, FreeEnergy, Hasher>;
-pub type Init1Vs1IlDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
+pub type OneVs1IlDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
 pub type OneVs2Il = (BasePair, Base);
-pub type Init1Vs2IlDeltaFes = HashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy, Hasher>;
+pub type OneVs2IlDeltaFes = HashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy, Hasher>;
 pub type TwoVs2Il = (BasePair, BasePair);
-pub type Init2Vs2IlDeltaFes = HashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy, Hasher>;
+pub type TwoVs2IlDeltaFes = HashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy, Hasher>;
 
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: usize = 7;
 pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = 1.08;
@@ -28,7 +28,7 @@ lazy_static! {
     }
     init_il_delta_fes
   };
-  pub static ref INIT_1_VS_1_IL_DELTA_FES: Init1Vs1IlDeltaFes = {
+  pub static ref ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {
     [
       // For internal pairs behind the base pair "AU".
       // For internal pairs between the base pairs "AU" and "AU".
@@ -218,7 +218,7 @@ lazy_static! {
       ((UG, UA, UG), 1.9), ((UG, UC, UG), 1.9), ((UG, UG, UG), 1.9), ((UG, UU, UG), 1.6),
     ].iter().cloned().collect()
   };
-  pub static ref INIT_1_VS_2_IL_DELTA_FES: Init1Vs2IlDeltaFes = {
+  pub static ref ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
@@ -948,7 +948,7 @@ lazy_static! {
       ((UG, (UG, U), UG), 3.0), ((UG, (UC, U), UG), 3.0), ((UG, (UG, U), UG), 3.0), ((UG, (UU, U), UG), 3.0),
     ].iter().cloned().collect()
   };
-    pub static ref INIT_2_VS_2_IL_DELTA_FES: Init2Vs2IlDeltaFes = {
+    pub static ref TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
