@@ -9,8 +9,6 @@ pub type BasePair = (Base, Base);
 pub type Hasher = BuildHasherDefault<FnvHasher>;
 pub type Seq = Vec<Base>;
 
-pub const MAX_2LOOP_LEN: usize = 30;
-pub const MAX_SPAN_OF_INDEX_PAIR_CLOSING_2LOOP: usize = MAX_2LOOP_LEN + 2;
 pub const GAS_CONST: FreeEnergy = 1.98717;
 pub const K0: FreeEnergy = 273.15;
 pub const TEMPERATURE: FreeEnergy = 37. + K0;
