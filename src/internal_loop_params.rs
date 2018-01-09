@@ -587,7 +587,7 @@ lazy_static! {
       // For internal loops between the base pairs "UA" and "AU".
       ((UA, (AA, A), AU), 3.7), ((UA, (AC, A), AU), 3.7), ((UA, (AG, A), AU), 2.6), ((UA, (UA, A), AU), 3.7),
       ((UA, (CA, A), AU), 3.7), ((UA, (CC, A), AU), 3.7), ((UA, (UA, A), AU), 3.7), ((UA, (CU, A), AU), 3.7),
-      ((UA, (GA, A), AU), 2.6), ((UA, (UA, A), AU), 2.6), ((UA, (GG, A), AU), 2.6), ((UA, (GU, A), AU), 2.6),
+      ((UA, (GA, A), AU), 2.6), ((UA, (GC, A), AU), 2.6), ((UA, (GG, A), AU), 2.6), ((UA, (GU, A), AU), 2.6),
       ((UA, (UA, A), AU), 3.7), ((UA, (UC, A), AU), 3.7), ((UA, (UG, A), AU), 3.7), ((UA, (UU, A), AU), 3.0),
       // For internal loops between the base pairs "UA" and "CG".
       ((UA, (AA, A), CG), 3.0), ((UA, (AC, A), CG), 3.0), ((UA, (AG, A), CG), 1.9), ((UA, (UA, A), CG), 3.0),
