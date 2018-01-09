@@ -6,7 +6,7 @@ pub type SpecialHlDeltaFes = HashMap<Seq, FreeEnergy, Hasher>;
 pub const MIN_HL_LEN: usize = 3;
 pub const MIN_SPAN_OF_INDEX_PAIR_CLOSING_HL: usize = MIN_HL_LEN + 2;
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: usize = 10;
-pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: FreeEnergy = 1.75 * GAS_CONST * TEMPERATURE;
+pub const COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: FreeEnergy = 1.75 * GAS_CONST * TEMPERATURE; // The unit is [kcal / mol].
 pub const HL_UU_OR_GA_FIRST_MISMATCH_BONUS_DELTA_FE: FreeEnergy = -0.9;
 pub const HL_GG_FIRST_MISMATCH_BONUS_DELTA_FE: FreeEnergy = -0.8;
 pub const HL_SPECIAL_GU_CLOSURE_BONUS_DELTA_FE: FreeEnergy = -2.2;
@@ -19,7 +19,7 @@ lazy_static! {
     let len_of_init_hl_delta_fes = init_hl_delta_fes.len();
     let basic_init_hl_delta_fe = init_hl_delta_fes[MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1];
     for i in len_of_init_hl_delta_fes .. MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE {
-      init_hl_delta_fes.push(basic_init_hl_delta_fe + (COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE * fast_ln(i as FreeEnergy / (MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1) as FreeEnergy)) / KILO);
+      init_hl_delta_fes.push(basic_init_hl_delta_fe + COEFFICENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE * fast_ln(i as FreeEnergy / (MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1) as FreeEnergy));
     }
     init_hl_delta_fes
   };
