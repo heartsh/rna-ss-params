@@ -258,7 +258,7 @@ lazy_static! {
       ((AU, (UA, C), AU), 3.7), ((AU, (UC, C), AU), 3.7), ((AU, (UG, C), AU), 3.7), ((AU, (UU, C), AU), 3.0),
       // For internal loops between the base pairs "AU" and "CG".
       ((AU, (AA, C), CG), 3.0), ((AU, (AC, C), CG), 3.0), ((AU, (AG, C), CG), 3.0), ((AU, (AU, C), CG), 3.0),
-      ((AU, (CA, C), CG), 3.0), ((AU, (CC, C), CG), 3.0), ((AU, (CG, A), CG), 3.0), ((AU, (CU, C), CG), 3.0),
+      ((AU, (CA, C), CG), 3.0), ((AU, (CC, C), CG), 3.0), ((AU, (CG, C), CG), 3.0), ((AU, (CU, C), CG), 3.0),
       ((AU, (GA, C), CG), 1.9), ((AU, (GC, C), CG), 3.0), ((AU, (GG, C), CG), 1.9), ((AU, (GU, C), CG), 3.0),
       ((AU, (UA, C), CG), 3.0), ((AU, (UC, C), CG), 3.0), ((AU, (UG, C), CG), 3.0), ((AU, (UU, C), CG), 2.2),
       // For internal loops between the base pairs "AU" and "GC".
@@ -288,7 +288,7 @@ lazy_static! {
       ((AU, (UA, G), AU), 3.7), ((AU, (UC, G), AU), 3.7), ((AU, (UG, G), AU), 3.7), ((AU, (UU, G), AU), 3.0),
       // For internal loops between the base pairs "AU" and "CG".
       ((AU, (AA, G), CG), 1.9), ((AU, (AC, G), CG), 1.9), ((AU, (AG, G), CG), 1.9), ((AU, (AU, G), CG), 1.9),
-      ((AU, (CA, G), CG), 3.0), ((AU, (CC, G), CG), 3.0), ((AU, (CG, A), CG), 3.0), ((AU, (CU, G), CG), 3.0),
+      ((AU, (CA, G), CG), 3.0), ((AU, (CC, G), CG), 3.0), ((AU, (CG, G), CG), 3.0), ((AU, (CU, G), CG), 3.0),
       ((AU, (GA, G), CG), 1.9), ((AU, (GC, G), CG), 1.9), ((AU, (GG, G), CG), 1.9), ((AU, (GU, G), CG), 1.9),
       ((AU, (UA, G), CG), 3.0), ((AU, (UC, G), CG), 3.0), ((AU, (UG, G), CG), 3.0), ((AU, (UU, G), CG), 2.2),
       // For internal loops between the base pairs "AU" and "GC".
@@ -318,7 +318,7 @@ lazy_static! {
       ((AU, (UA, U), AU), 3.0), ((AU, (UC, U), AU), 3.0), ((AU, (UG, U), AU), 3.0), ((AU, (UU, U), AU), 3.0),
       // For internal loops between the base pairs "AU" and "CG".
       ((AU, (AA, U), CG), 3.0), ((AU, (AC, U), CG), 3.0), ((AU, (AG, U), CG), 3.0), ((AU, (AU, U), CG), 3.0),
-      ((AU, (CA, U), CG), 3.0), ((AU, (CC, U), CG), 3.0), ((AU, (CG, A), CG), 3.0), ((AU, (CU, U), CG), 3.0),
+      ((AU, (CA, U), CG), 3.0), ((AU, (CC, U), CG), 3.0), ((AU, (CG, U), CG), 3.0), ((AU, (CU, U), CG), 3.0),
       ((AU, (GA, U), CG), 1.9), ((AU, (GC, U), CG), 3.0), ((AU, (GG, U), CG), 1.9), ((AU, (GU, U), CG), 3.0),
       ((AU, (UA, U), CG), 2.2), ((AU, (UC, U), CG), 2.2), ((AU, (UG, U), CG), 2.2), ((AU, (UU, U), CG), 2.2),
       // For internal loops between the base pairs "AU" and "GC".
@@ -379,7 +379,7 @@ lazy_static! {
       ((CG, (UA, C), AU), 3.0), ((CG, (UC, C), AU), 3.0), ((CG, (UG, C), AU), 3.0), ((CG, (UU, C), AU), 2.2),
       // For internal loops between the base pairs "CG" and "CG".
       ((CG, (AA, C), CG), 2.3), ((CG, (AC, C), CG), 1.7), ((CG, (AG, C), CG), 1.1), ((CG, (AU, C), CG), 2.3),
-      ((CG, (CA, C), CG), 2.3), ((CG, (CC, C), CG), 2.5), ((CG, (CG, A), CG), 2.3), ((CG, (CU, C), CG), 2.3),
+      ((CG, (CA, C), CG), 2.3), ((CG, (CC, C), CG), 2.5), ((CG, (CG, C), CG), 2.3), ((CG, (CU, C), CG), 2.3),
       ((CG, (GA, C), CG), 1.1), ((CG, (GC, C), CG), 2.3), ((CG, (GG, C), CG), 1.1), ((CG, (GU, C), CG), 2.3),
       ((CG, (UA, C), CG), 2.3), ((CG, (UC, C), CG), 2.2), ((CG, (UG, C), CG), 2.3), ((CG, (UU, C), CG), 1.5),
       // For internal loops between the base pairs "CG" and "GC".
@@ -409,7 +409,7 @@ lazy_static! {
       ((CG, (UA, G), AU), 3.0), ((CG, (UC, G), AU), 3.0), ((CG, (UG, G), AU), 3.0), ((CG, (UU, G), AU), 2.2),
       // For internal loops between the base pairs "CG" and "CG".
       ((CG, (AA, G), CG), 0.8), ((CG, (AC, G), CG), 1.1), ((CG, (AG, G), CG), 1.1), ((CG, (AU, G), CG), 1.1),
-      ((CG, (CA, G), CG), 2.3), ((CG, (CC, G), CG), 2.3), ((CG, (CG, A), CG), 2.3), ((CG, (CU, G), CG), 2.3),
+      ((CG, (CA, G), CG), 2.3), ((CG, (CC, G), CG), 2.3), ((CG, (CG, G), CG), 2.3), ((CG, (CU, G), CG), 2.3),
       ((CG, (GA, G), CG), 1.2), ((CG, (GC, G), CG), 1.1), ((CG, (GG, G), CG), 1.1), ((CG, (GU, G), CG), 1.1),
       ((CG, (UA, G), CG), 2.3), ((CG, (UC, G), CG), 2.3), ((CG, (UG, G), CG), 2.3), ((CG, (UU, G), CG), 1.5),
       // For internal loops between the base pairs "CG" and "GC".
@@ -439,7 +439,7 @@ lazy_static! {
       ((CG, (UA, U), AU), 2.2), ((CG, (UC, U), AU), 2.2), ((CG, (UG, U), AU), 2.2), ((CG, (UU, U), AU), 2.2),
       // For internal loops between the base pairs "CG" and "CG".
       ((CG, (AA, U), CG), 2.3), ((CG, (AC, U), CG), 2.3), ((CG, (AG, U), CG), 1.1), ((CG, (AU, U), CG), 2.3),
-      ((CG, (CA, U), CG), 2.5), ((CG, (CC, U), CG), 2.3), ((CG, (CG, A), CG), 2.3), ((CG, (CU, U), CG), 2.3),
+      ((CG, (CA, U), CG), 2.5), ((CG, (CC, U), CG), 2.3), ((CG, (CG, U), CG), 2.3), ((CG, (CU, U), CG), 2.3),
       ((CG, (GA, U), CG), 1.1), ((CG, (GC, U), CG), 2.3), ((CG, (GG, U), CG), 1.1), ((CG, (GU, U), CG), 2.3),
       ((CG, (UA, U), CG), 1.5), ((CG, (UC, U), CG), 1.7), ((CG, (UG, U), CG), 1.5), ((CG, (UU, U), CG), 1.4),
       // For internal loops between the base pairs "CG" and "GC".
@@ -500,7 +500,7 @@ lazy_static! {
       ((GC, (UA, C), AU), 3.0), ((GC, (UC, C), AU), 3.0), ((GC, (UG, C), AU), 3.0), ((GC, (UU, C), AU), 2.2),
       // For internal loops between the base pairs "GC" and "CG".
       ((GC, (AA, C), CG), 2.3), ((GC, (AC, C), CG), 2.3), ((GC, (AG, C), CG), 2.3), ((GC, (AU, C), CG), 2.3),
-      ((GC, (CA, C), CG), 2.3), ((GC, (CC, C), CG), 2.3), ((GC, (CG, A), CG), 2.3), ((GC, (CU, C), CG), 2.3),
+      ((GC, (CA, C), CG), 2.3), ((GC, (CC, C), CG), 2.3), ((GC, (CG, C), CG), 2.3), ((GC, (CU, C), CG), 2.3),
       ((GC, (GA, C), CG), 1.1), ((GC, (GC, C), CG), 2.3), ((GC, (GG, C), CG), 1.1), ((GC, (GU, C), CG), 2.3),
       ((GC, (UA, C), CG), 2.3), ((GC, (UC, C), CG), 2.3), ((GC, (UG, C), CG), 2.3), ((GC, (UU, C), CG), 1.5),
       // For internal loops between the base pairs "GC" and "GC".
@@ -530,7 +530,7 @@ lazy_static! {
       ((GC, (UA, G), AU), 3.0), ((GC, (UC, G), AU), 3.0), ((GC, (UG, G), AU), 3.0), ((GC, (UU, G), AU), 2.2),
       // For internal loops between the base pairs "GC" and "CG".
       ((GC, (AA, G), CG), 1.1), ((GC, (AC, G), CG), 1.1), ((GC, (AG, G), CG), 1.1), ((GC, (AU, G), CG), 1.1),
-      ((GC, (CA, G), CG), 2.3), ((GC, (CC, G), CG), 2.3), ((GC, (CG, A), CG), 2.3), ((GC, (CU, G), CG), 2.3),
+      ((GC, (CA, G), CG), 2.3), ((GC, (CC, G), CG), 2.3), ((GC, (CG, G), CG), 2.3), ((GC, (CU, G), CG), 2.3),
       ((GC, (GA, G), CG), 1.1), ((GC, (GC, G), CG), 1.1), ((GC, (GG, G), CG), 1.1), ((GC, (GU, G), CG), 1.1),
       ((GC, (UA, G), CG), 2.3), ((GC, (UC, G), CG), 2.3), ((GC, (UG, G), CG), 2.3), ((GC, (UU, G), CG), 1.5),
       // For internal loops between the base pairs "GC" and "GC".
@@ -560,7 +560,7 @@ lazy_static! {
       ((GC, (UA, U), AU), 2.2), ((GC, (UC, U), AU), 2.2), ((GC, (UG, U), AU), 2.2), ((GC, (UU, U), AU), 2.2),
       // For internal loops between the base pairs "GC" and "CG".
       ((GC, (AA, U), CG), 2.3), ((GC, (AC, U), CG), 2.3), ((GC, (AG, U), CG), 2.3), ((GC, (AU, U), CG), 2.3),
-      ((GC, (CA, U), CG), 2.3), ((GC, (CC, U), CG), 2.3), ((GC, (CG, A), CG), 2.3), ((GC, (CU, U), CG), 2.3),
+      ((GC, (CA, U), CG), 2.3), ((GC, (CC, U), CG), 2.3), ((GC, (CG, U), CG), 2.3), ((GC, (CU, U), CG), 2.3),
       ((GC, (GA, U), CG), 1.1), ((GC, (GC, U), CG), 2.3), ((GC, (GG, U), CG), 1.1), ((GC, (GU, U), CG), 2.3),
       ((GC, (UA, U), CG), 1.5), ((GC, (UC, U), CG), 1.7), ((GC, (UG, U), CG), 1.5), ((GC, (UU, U), CG), 1.5),
       // For internal loops between the base pairs "GC" and "GC".
@@ -621,7 +621,7 @@ lazy_static! {
       ((UA, (UA, C), AU), 3.7), ((UA, (UC, C), AU), 3.7), ((UA, (UG, C), AU), 3.7), ((UA, (UU, C), AU), 3.0),
       // For internal loops between the base pairs "UA" and "CG".
       ((UA, (AA, C), CG), 3.0), ((UA, (AC, C), CG), 3.0), ((UA, (AG, C), CG), 1.9), ((UA, (AU, C), CG), 3.0),
-      ((UA, (CA, C), CG), 3.0), ((UA, (CC, C), CG), 3.0), ((UA, (CG, A), CG), 3.0), ((UA, (CU, C), CG), 3.0),
+      ((UA, (CA, C), CG), 3.0), ((UA, (CC, C), CG), 3.0), ((UA, (CG, C), CG), 3.0), ((UA, (CU, C), CG), 3.0),
       ((UA, (GA, C), CG), 1.9), ((UA, (GC, C), CG), 3.0), ((UA, (GG, C), CG), 1.9), ((UA, (GU, C), CG), 3.0),
       ((UA, (UA, C), CG), 3.0), ((UA, (UC, C), CG), 3.0), ((UA, (UG, C), CG), 3.0), ((UA, (UU, C), CG), 2.2),
       // For internal loops between the base pairs "UA" and "GC".
@@ -651,7 +651,7 @@ lazy_static! {
       ((UA, (UA, G), AU), 3.7), ((UA, (UC, G), AU), 3.7), ((UA, (UG, G), AU), 3.7), ((UA, (UU, G), AU), 3.0),
       // For internal loops between the base pairs "UA" and "CG".
       ((UA, (AA, G), CG), 1.9), ((UA, (AC, G), CG), 1.9), ((UA, (AG, G), CG), 1.9), ((UA, (AU, G), CG), 1.9),
-      ((UA, (CA, G), CG), 3.0), ((UA, (CC, G), CG), 3.0), ((UA, (CG, A), CG), 3.0), ((UA, (CU, G), CG), 3.0),
+      ((UA, (CA, G), CG), 3.0), ((UA, (CC, G), CG), 3.0), ((UA, (CG, G), CG), 3.0), ((UA, (CU, G), CG), 3.0),
       ((UA, (GA, G), CG), 1.9), ((UA, (GC, G), CG), 1.9), ((UA, (GG, G), CG), 1.9), ((UA, (GU, G), CG), 1.9),
       ((UA, (UA, G), CG), 3.0), ((UA, (UC, G), CG), 3.0), ((UA, (UG, G), CG), 3.0), ((UA, (UU, G), CG), 2.2),
       // For internal loops between the base pairs "UA" and "GC".
@@ -681,7 +681,7 @@ lazy_static! {
       ((UA, (UA, U), AU), 3.0), ((UA, (UC, U), AU), 3.0), ((UA, (UG, U), AU), 3.0), ((UA, (UU, U), AU), 3.0),
       // For internal loops between the base pairs "UA" and "CG".
       ((UA, (AA, U), CG), 3.0), ((UA, (AC, U), CG), 3.0), ((UA, (AG, U), CG), 1.9), ((UA, (AU, U), CG), 3.0),
-      ((UA, (CA, U), CG), 3.0), ((UA, (CC, U), CG), 3.0), ((UA, (CG, A), CG), 3.0), ((UA, (CU, U), CG), 3.0),
+      ((UA, (CA, U), CG), 3.0), ((UA, (CC, U), CG), 3.0), ((UA, (CG, U), CG), 3.0), ((UA, (CU, U), CG), 3.0),
       ((UA, (GA, U), CG), 1.9), ((UA, (GC, U), CG), 3.0), ((UA, (GG, U), CG), 1.9), ((UA, (GU, U), CG), 3.0),
       ((UA, (UA, U), CG), 2.2), ((UA, (UC, U), CG), 2.2), ((UA, (UG, U), CG), 2.2), ((UA, (UU, U), CG), 2.2),
       // For internal loops between the base pairs "UA" and "GC".
@@ -742,7 +742,7 @@ lazy_static! {
       ((GU, (UA, C), AU), 3.7), ((GU, (UC, C), AU), 3.7), ((GU, (UG, C), AU), 3.7), ((GU, (UU, C), AU), 3.0),
       // For internal loops between the base pairs "GU" and "CG".
       ((GU, (AA, C), CG), 3.0), ((GU, (AC, C), CG), 3.0), ((GU, (AG, C), CG), 3.0), ((GU, (AU, C), CG), 3.0),
-      ((GU, (CA, C), CG), 3.0), ((GU, (CC, C), CG), 3.0), ((GU, (CG, A), CG), 3.0), ((GU, (CU, C), CG), 3.0),
+      ((GU, (CA, C), CG), 3.0), ((GU, (CC, C), CG), 3.0), ((GU, (CG, C), CG), 3.0), ((GU, (CU, C), CG), 3.0),
       ((GU, (GA, C), CG), 1.9), ((GU, (GC, C), CG), 3.0), ((GU, (GG, C), CG), 1.9), ((GU, (GU, C), CG), 3.0),
       ((GU, (UA, C), CG), 3.0), ((GU, (UC, C), CG), 3.0), ((GU, (UG, C), CG), 3.0), ((GU, (UU, C), CG), 2.2),
       // For internal loops between the base pairs "GU" and "GC".
@@ -772,7 +772,7 @@ lazy_static! {
       ((GU, (UA, G), AU), 3.7), ((GU, (UC, G), AU), 3.7), ((GU, (UG, G), AU), 3.7), ((GU, (UU, G), AU), 3.0),
       // For internal loops between the base pairs "GU" and "CG".
       ((GU, (AA, G), CG), 1.9), ((GU, (AC, G), CG), 1.9), ((GU, (AG, G), CG), 1.9), ((GU, (AU, G), CG), 1.9),
-      ((GU, (CA, G), CG), 3.0), ((GU, (CC, G), CG), 3.0), ((GU, (CG, A), CG), 3.0), ((GU, (CU, G), CG), 3.0),
+      ((GU, (CA, G), CG), 3.0), ((GU, (CC, G), CG), 3.0), ((GU, (CG, G), CG), 3.0), ((GU, (CU, G), CG), 3.0),
       ((GU, (GA, G), CG), 1.9), ((GC, (GU, G), CG), 1.9), ((GU, (GG, G), CG), 1.9), ((GU, (GU, G), CG), 1.9),
       ((GU, (UA, G), CG), 3.0), ((GU, (UC, G), CG), 3.0), ((GU, (UG, G), CG), 3.0), ((GU, (UU, G), CG), 2.2),
       // For internal loops between the base pairs "GU" and "GC".
@@ -802,7 +802,7 @@ lazy_static! {
       ((GU, (UA, U), AU), 3.0), ((GU, (UC, U), AU), 3.0), ((GU, (UG, U), AU), 3.0), ((GU, (UU, U), AU), 3.0),
       // For internal loops between the base pairs "GU" and "CG".
       ((GU, (AA, U), CG), 3.0), ((GU, (AC, U), CG), 3.0), ((GU, (AG, U), CG), 3.0), ((GU, (AU, U), CG), 3.0),
-      ((GU, (CA, U), CG), 3.0), ((GU, (CC, U), CG), 3.0), ((GU, (CG, A), CG), 3.0), ((GU, (CU, U), CG), 3.0),
+      ((GU, (CA, U), CG), 3.0), ((GU, (CC, U), CG), 3.0), ((GU, (CG, U), CG), 3.0), ((GU, (CU, U), CG), 3.0),
       ((GU, (GA, U), CG), 1.9), ((GU, (GC, U), CG), 3.0), ((GU, (GG, U), CG), 1.9), ((GU, (GU, U), CG), 3.0),
       ((GU, (UA, U), CG), 2.2), ((GU, (UC, U), CG), 2.2), ((GU, (UG, U), CG), 2.2), ((GU, (UU, U), CG), 2.2),
       // For internal loops between the base pairs "GU" and "GC".
@@ -863,7 +863,7 @@ lazy_static! {
       ((UG, (UA, C), AU), 3.7), ((UG, (UC, C), AU), 3.7), ((UG, (UG, C), AU), 3.7), ((UG, (UU, C), AU), 3.0),
       // For internal loops between the base pairs "UG" and "CG".
       ((UG, (AA, C), CG), 3.0), ((UG, (AC, C), CG), 3.0), ((UG, (AG, C), CG), 1.9), ((UG, (AU, C), CG), 3.0),
-      ((UG, (CA, C), CG), 3.0), ((UG, (CC, C), CG), 3.0), ((UG, (CG, A), CG), 3.0), ((UG, (CU, C), CG), 3.0),
+      ((UG, (CA, C), CG), 3.0), ((UG, (CC, C), CG), 3.0), ((UG, (CG, C), CG), 3.0), ((UG, (CU, C), CG), 3.0),
       ((UG, (GA, C), CG), 1.9), ((UG, (GC, C), CG), 3.0), ((UG, (GG, C), CG), 1.9), ((UG, (GU, C), CG), 3.0),
       ((UG, (UA, C), CG), 3.0), ((UG, (UC, C), CG), 3.0), ((UG, (UG, C), CG), 3.0), ((UG, (UU, C), CG), 2.2),
       // For internal loops between the base pairs "UG" and "GC".
@@ -893,7 +893,7 @@ lazy_static! {
       ((UG, (UA, G), AU), 3.7), ((UG, (UC, G), AU), 3.7), ((UG, (UG, G), AU), 3.7), ((UG, (UU, G), AU), 3.0),
       // For internal loops between the base pairs "UG" and "CG".
       ((UG, (AA, G), CG), 1.9), ((UG, (AC, G), CG), 1.9), ((UG, (AG, G), CG), 1.9), ((UG, (AU, G), CG), 1.9),
-      ((UG, (CA, G), CG), 3.0), ((UG, (CC, G), CG), 3.0), ((UG, (CG, A), CG), 3.0), ((UG, (CU, G), CG), 3.0),
+      ((UG, (CA, G), CG), 3.0), ((UG, (CC, G), CG), 3.0), ((UG, (CG, G), CG), 3.0), ((UG, (CU, G), CG), 3.0),
       ((UG, (GA, G), CG), 1.9), ((UG, (GC, G), CG), 1.9), ((UG, (GG, G), CG), 1.9), ((UG, (GU, G), CG), 1.9),
       ((UG, (UA, G), CG), 3.0), ((UG, (UC, G), CG), 3.0), ((UG, (UG, G), CG), 3.0), ((UG, (UU, G), CG), 2.2),
       // For internal loops between the base pairs "UG" and "GC".
@@ -923,7 +923,7 @@ lazy_static! {
       ((UG, (UA, U), AU), 3.0), ((UG, (UC, U), AU), 3.0), ((UG, (UG, U), AU), 3.0), ((UG, (UU, U), AU), 3.0),
       // For internal loops between the base pairs "UG" and "CG".
       ((UG, (AA, U), CG), 3.0), ((UG, (AC, U), CG), 3.0), ((UG, (AG, U), CG), 1.9), ((UG, (AU, U), CG), 3.0),
-      ((UG, (CA, U), CG), 3.0), ((UG, (CC, U), CG), 3.0), ((UG, (CG, A), CG), 3.0), ((UG, (CU, U), CG), 3.0),
+      ((UG, (CA, U), CG), 3.0), ((UG, (CC, U), CG), 3.0), ((UG, (CG, U), CG), 3.0), ((UG, (CU, U), CG), 3.0),
       ((UG, (GA, U), CG), 1.9), ((UG, (GC, U), CG), 3.0), ((UG, (GG, U), CG), 1.9), ((UG, (GU, U), CG), 3.0),
       ((UG, (UA, U), CG), 2.2), ((UG, (UC, U), CG), 2.2), ((UG, (UG, U), CG), 2.2), ((UG, (UU, U), CG), 2.2),
       // For internal loops between the base pairs "UG" and "GC".
