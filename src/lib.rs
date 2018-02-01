@@ -1,6 +1,6 @@
 #[macro_use]
 extern crate lazy_static;
-extern crate fnv;
+extern crate bio_seq_algos;
 
 pub mod utils;
 pub mod bulge_loop_params;

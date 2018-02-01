@@ -1,13 +1,9 @@
-pub use std::collections::HashMap;
+pub use bio_seq_algos::utils::*;
 use std::f32::consts::LOG2_E;
-use std::hash::BuildHasherDefault;
-use fnv::FnvHasher;
 
 pub type FreeEnergy = f32;
-pub type Base = u8;
+pub type Base = Char;
 pub type BasePair = (Base, Base);
-pub type Hasher = BuildHasherDefault<FnvHasher>;
-pub type Seq = Vec<Base>;
 
 pub const GAS_CONST: FreeEnergy = 1.98717 / KILO; // The unit is [kcal / (K * mol)].
 pub const K0: FreeEnergy = 273.15; // The unit is [K].

@@ -2,15 +2,15 @@
 name = "rna-ss-params"
 version = "0.1.8"
 authors = ["heartsh <heartsh@heartsh.io>"]
-description = "RNA secondary-structure parameters"
-repository = "https://github.com/heartsh/rna-ss-prms"
+description = "Library of RNA secondary-structure parameters"
+repository = "https://github.com/heartsh/rna-ss-params"
 readme = "README.md"
 keywords = ["bioinformatics", "rna", "secondary-structure"]
 license = "MIT"
 
 [dependencies]
-fnv = "1.0"
 lazy_static = "0.1"
+bio-seq-algos = "0.1"
 
 [lib]
 path = "src/lib.rs"
