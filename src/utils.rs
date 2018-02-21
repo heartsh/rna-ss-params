@@ -1,5 +1,4 @@
 pub use bio_seq_algos::utils::*;
-use std::f32::consts::LOG2_E;
 
 pub type FreeEnergy = f32;
 pub type Base = Char;
@@ -30,9 +29,3 @@ pub const UA: BasePair = (U, A);
 pub const UC: BasePair = (U, C);
 pub const UG: BasePair = (U, G);
 pub const UU: BasePair = (U, U);
-const INVERSE_LOG2_E: FreeEnergy = 1. / LOG2_E;
-
-#[inline]
-pub fn fast_ln(x: f32) -> f32 {
-  x.log2() * INVERSE_LOG2_E
-}
