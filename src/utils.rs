@@ -1,6 +1,6 @@
 pub use bio_seq_algos::utils::*;
 
-pub type FreeEnergy = f32;
+pub type FreeEnergy = Prob;
 pub type Base = Char;
 pub type BasePair = (Base, Base);
 
