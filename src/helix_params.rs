@@ -2,11 +2,14 @@ use utils::*;
 
 pub type StackDeltaFes = HashMap<(BasePair, BasePair), FreeEnergy, Hasher>;
 
-pub const HELIX_INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = 4.09;
-pub const HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = 0.45;
-pub const HELIX_SYMMETRY_PENALTY_DELTA_FE: FreeEnergy = 0.43;
+pub const HELIX_INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 4.09;
+pub const HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 0.45;
+pub const HELIX_SYMMETRY_PENALTY_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 0.43;
 
 lazy_static! {
+  pub static ref EXP_HELIX_INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = HELIX_INTERMOLECULAR_INIT_DELTA_FE.exp();
+  pub static ref EXP_HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = HELIX_AU_OR_GU_END_PENALTY_DELTA_FE.exp();
+  pub static ref EXP_HELIX_SYMMETRY_PENALTY_DELTA_FE: FreeEnergy = HELIX_SYMMETRY_PENALTY_DELTA_FE.exp();
   pub static ref STACK_DELTA_FES: StackDeltaFes = {
     [
       // For the base pair "AU" against which another base pair is stacked.
@@ -21,6 +24,7 @@ lazy_static! {
       ((UA, AU), -1.3), ((UA, CG), -2.4), ((UA, GC), -2.1), ((UA, GU), -1.0), ((UA, UA), -0.9), ((UA, UG), -1.3), 
       // For the base pair "UG" against which another base pair is stacked.
       ((UG, AU), -1.0), ((UG, CG), -1.5), ((UG, GC), -1.4), ((UG, GU), 0.3), ((UG, UA), -0.6), ((UG, UG), -0.5), 
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_STACK_DELTA_FES: StackDeltaFes = {STACK_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
 }

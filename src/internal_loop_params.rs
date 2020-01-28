@@ -1,6 +1,6 @@
 use utils::*;
 
-pub type InitIlDeltaFes = [FreeEnergy; MAX_2_LOOP_LEN + 1];
+pub type InitIlDeltaFes = Vec<FreeEnergy>;
 pub type IlTmBonusDeltaFes = HashMap<BasePair, FreeEnergy, Hasher>;
 pub type OneVs1IlDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
 pub type OneVs2Il = (BasePair, Base);
@@ -9,21 +9,29 @@ pub type TwoVs2Il = (BasePair, BasePair);
 pub type TwoVs2IlDeltaFes = HashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy, Hasher>;
 
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: usize = 7;
-pub const COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = 1.08;
-pub const IL_ASYMMETRY_PENALTY_DELTA_FE: FreeEnergy = 0.6;
-pub const IL_AU_OR_GU_CLOSURE_PENALTY_DELTA_FE: FreeEnergy = 0.7;
-pub const INIT_IL_DELTA_FES: InitIlDeltaFes = [
-  0., 0., 0., 0., 1.1, 2.0, 2.0, 2.1, 2.3, 2.4, 2.5,
-  2.6, 2.7, 2.8, 2.9, 2.9, 3., 3.1, 3.1, 3.2, 3.3,
-  3.3, 3.4, 3.4, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7
-];
+pub const COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 1.08;
+pub const IL_ASYMMETRY_PENALTY_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 0.6;
+pub const IL_AU_OR_GU_CLOSURE_PENALTY_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 0.7;
 lazy_static! {
+  pub static ref EXP_COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE.exp();
+  pub static ref EXP_IL_ASYMMETRY_PENALTY_DELTA_FE: FreeEnergy = IL_ASYMMETRY_PENALTY_DELTA_FE.exp();
+  pub static ref EXP_IL_AU_OR_GU_CLOSURE_PENALTY_DELTA_FE: FreeEnergy = IL_AU_OR_GU_CLOSURE_PENALTY_DELTA_FE.exp();
+  pub static ref INIT_IL_DELTA_FES: InitIlDeltaFes = {
+    vec![
+      0., 0., 0., 0., 1.1, 2.0, 2.0, 2.1, 2.3, 2.4, 2.5,
+      2.6, 2.7, 2.8, 2.9, 2.9, 3., 3.1, 3.1, 3.2, 3.3,
+      3.3, 3.4, 3.4, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7
+    ].iter().map(|&x| {scale(x)}).collect()
+  };
+  pub static ref EXP_INIT_IL_DELTA_FES: InitIlDeltaFes = {INIT_IL_DELTA_FES.iter().map(|&x| {x.exp()}).collect()};
   pub static ref TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
-    [(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)].iter().cloned().collect()
+    [(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {TWO_VS_3_IL_TM_BONUS_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
   pub static ref OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
-    [(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)].iter().cloned().collect()
+    [(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {OTHER_IL_TM_BONUS_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
   pub static ref ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {
     [
       // For internal pairs behind the base pair "AU".
@@ -212,8 +220,9 @@ lazy_static! {
       ((UG, CA, UG), 1.9), ((UG, CC, UG), 1.9), ((UG, CG, UG), 1.9), ((UG, CU, UG), 1.9),
       ((UG, GA, UG), 1.9), ((UG, GC, UG), 1.9), ((UG, GG, UG), -0.7), ((UG, GU, UG), 1.9),
       ((UG, UA, UG), 1.9), ((UG, UC, UG), 1.9), ((UG, UG, UG), 1.9), ((UG, UU, UG), 1.6),
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {ONE_VS_1_IL_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
   pub static ref ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
@@ -942,9 +951,10 @@ lazy_static! {
       ((UG, (CA, U), UG), 3.7), ((UG, (CC, U), UG), 3.7), ((UG, (CG, U), UG), 3.7), ((UG, (CU, U), UG), 3.7),
       ((UG, (GA, U), UG), 2.6), ((UG, (GC, U), UG), 3.7), ((UG, (GG, U), UG), 2.6), ((UG, (GU, U), UG), 3.7),
       ((UG, (UA, U), UG), 3.0), ((UG, (UC, U), UG), 3.0), ((UG, (UG, U), UG), 3.0), ((UG, (UU, U), UG), 3.0),
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
-    pub static ref TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {
+  pub static ref EXP_ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {ONE_VS_2_IL_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
+  pub static ref TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {
     [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
@@ -1560,6 +1570,7 @@ lazy_static! {
       ((UG, (UC, AA), UG), 3.4), ((UG, (UC, AC), UG), 3.1), ((UG, (UC, AG), UG), 2.9), ((UG, (UC, AU), UG), 3.1), ((UG, (UC, CA), UG), 3.1), ((UG, (UC, CC), UG), 3.1), ((UG, (UC, CG), UG), 3.1), ((UG, (UC, CU), UG), 3.1), ((UG, (UC, GA), UG), 3.3), ((UG, (UC, GC), UG), 3.1), ((UG, (UC, GG), UG), 1.8), ((UG, (UC, GU), UG), 3.1), ((UG, (UC, UA), UG), 3.1), ((UG, (UC, UC), UG), 3.1), ((UG, (UC, UG), UG), 3.1), ((UG, (UC, UU), UG), 3.1),
       ((UG, (UG, AA), UG), 3.4), ((UG, (UG, AC), UG), 3.1), ((UG, (UG, AG), UG), 2.3), ((UG, (UG, AU), UG), 3.1), ((UG, (UG, CA), UG), 3.1), ((UG, (UG, CC), UG), 3.1), ((UG, (UG, CG), UG), 3.1), ((UG, (UG, CU), UG), 3.1), ((UG, (UG, GA), UG), 2.7), ((UG, (UG, GC), UG), 3.1), ((UG, (UG, GG), UG), 1.8), ((UG, (UG, GU), UG), 3.1), ((UG, (UG, UA), UG), 3.1), ((UG, (UG, UC), UG), 3.1), ((UG, (UG, UG), UG), 3.1), ((UG, (UG, UU), UG), 3.1),
       ((UG, (UU, AA), UG), 4.0), ((UG, (UU, AC), UG), 3.1), ((UG, (UU, AG), UG), 2.3), ((UG, (UU, AU), UG), 3.1), ((UG, (UU, CA), UG), 3.1), ((UG, (UU, CC), UG), 3.1), ((UG, (UU, CG), UG), 3.1), ((UG, (UU, CU), UG), 3.1), ((UG, (UU, GA), UG), 2.7), ((UG, (UU, GC), UG), 3.1), ((UG, (UU, GG), UG), 3.1), ((UG, (UU, GU), UG), 3.1), ((UG, (UU, UA), UG), 3.1), ((UG, (UU, UC), UG), 3.1), ((UG, (UU, UG), UG), 3.1), ((UG, (UU, UU), UG), 3.1),
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {TWO_VS_2_IL_DELTA_FES.iter().map(|(x, &y)| {(x.clone(), y.exp())}).collect()};
 }

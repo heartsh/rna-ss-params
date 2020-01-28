@@ -17,8 +17,9 @@ lazy_static! {
     ((UA, A), -0.8), ((UA, C), -0.5), ((UA, G), -0.8), ((UA, U), -0.6), 
     // For the base pair "UG" against which a base is stacked.
     ((UG, A), -0.8), ((UG, C), -0.5), ((UG, G), -0.8), ((UG, U), -0.6), 
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_THREE_PRIME_DE_DELTA_FES: DeDeltaFes = {THREE_PRIME_DE_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
   pub static ref FIVE_PRIME_DE_DELTA_FES: DeDeltaFes = {
     [
     // For the base pair "AU" against which a base is stacked.
@@ -33,6 +34,7 @@ lazy_static! {
     ((UA, A), -0.3), ((UA, C), -0.1), ((UA, G), -0.2), ((UA, U), -0.2), 
     // For the base pair "UG" against which a base is stacked.
     ((UG, A), -0.3), ((UG, C), -0.1), ((UG, G), -0.2), ((UG, U), -0.2), 
-    ].iter().cloned().collect()
+    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
   };
+  pub static ref EXP_FIVE_PRIME_DE_DELTA_FES: DeDeltaFes = {FIVE_PRIME_DE_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
 }

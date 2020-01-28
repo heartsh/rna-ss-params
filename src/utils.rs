@@ -10,6 +10,7 @@ pub const TEMPERATURE: FreeEnergy = 37. + K0; // The unit is [K].
 pub const MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE: usize = 1_000_000;
 pub const MAX_2_LOOP_LEN: usize = 30;
 pub const KILO: FreeEnergy = 1000.;
+pub const INVERSE_TEMPERATURE: FreeEnergy = 1. / (GAS_CONST as FreeEnergy * TEMPERATURE as FreeEnergy); // The unit is [K * mol / (kcal * K)] = [mol / kcal].
 pub const A: Base = 'A' as Base;
 pub const C: Base = 'C' as Base;
 pub const G: Base = 'G' as Base;
@@ -30,3 +31,8 @@ pub const UA: BasePair = (U, A);
 pub const UC: BasePair = (U, C);
 pub const UG: BasePair = (U, G);
 pub const UU: BasePair = (U, U);
+
+#[inline]
+pub fn scale(free_energy: FreeEnergy) -> FreeEnergy {
+  - INVERSE_TEMPERATURE * free_energy
+}
