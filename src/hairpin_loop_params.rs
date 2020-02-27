@@ -1,8 +1,9 @@
 use utils::*;
 
 pub type InitHlDeltaFes = Vec<FreeEnergy>;
-pub type SpecialHlDeltaFes = HashMap<Seq, FreeEnergy, Hasher>;
+pub type SpecialHlDeltaFes = [(Seq, FreeEnergy); NUM_OF_SPECIAL_HLS];
 
+pub const NUM_OF_SPECIAL_HLS: usize = 22;
 pub const MIN_HL_LEN: usize = 3;
 pub const MIN_SPAN_OF_INDEX_PAIR_CLOSING_HL: usize = MIN_HL_LEN + 2;
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: usize = 10;
@@ -55,7 +56,13 @@ lazy_static! {
       (String::from("ACAGUGAU").into_bytes(), 3.6),
       (String::from("ACAGUGUU").into_bytes(), 1.8),
       (String::from("ACAGUACU").into_bytes(), 2.8),
-    ].iter().map(|(x, y)| {(x.clone(), scale(*y))}).collect()
+    ]
   };
-  pub static ref EXP_SPECIAL_HL_DELTA_FES: SpecialHlDeltaFes = {SPECIAL_HL_DELTA_FES.iter().map(|(x, &y)| {(x.clone(), y.exp())}).collect()};
+  pub static ref EXP_SPECIAL_HL_DELTA_FES: SpecialHlDeltaFes = {
+    let mut special_hl_delta_fes = SPECIAL_HL_DELTA_FES.clone();
+    for special_hl_delta_fe in &mut special_hl_delta_fes {
+      special_hl_delta_fe.1 = special_hl_delta_fe.1.exp(); 
+    }
+    special_hl_delta_fes
+  };
 }

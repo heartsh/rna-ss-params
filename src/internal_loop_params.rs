@@ -1,12 +1,12 @@
 use utils::*;
 
 pub type InitIlDeltaFes = Vec<FreeEnergy>;
-pub type IlTmBonusDeltaFes = HashMap<BasePair, FreeEnergy, Hasher>;
-pub type OneVs1IlDeltaFes = HashMap<(BasePair, BasePair, BasePair), FreeEnergy, Hasher>;
+pub type IlTmBonusDeltaFes = FxHashMap<BasePair, FreeEnergy>;
+pub type OneVs1IlDeltaFes = FxHashMap<(BasePair, BasePair, BasePair), FreeEnergy>;
 pub type OneVs2Il = (BasePair, Base);
-pub type OneVs2IlDeltaFes = HashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy, Hasher>;
+pub type OneVs2IlDeltaFes = FxHashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy>;
 pub type TwoVs2Il = (BasePair, BasePair);
-pub type TwoVs2IlDeltaFes = HashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy, Hasher>;
+pub type TwoVs2IlDeltaFes = FxHashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy>;
 
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: usize = 7;
 pub const COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 1.08;

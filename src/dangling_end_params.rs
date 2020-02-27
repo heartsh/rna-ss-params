@@ -1,6 +1,6 @@
 use utils::*;
 
-pub type DeDeltaFes = HashMap<(BasePair, Base), FreeEnergy, Hasher>;
+pub type DeDeltaFes = FxHashMap<(BasePair, Base), FreeEnergy>;
 
 lazy_static! {
   pub static ref THREE_PRIME_DE_DELTA_FES: DeDeltaFes = {

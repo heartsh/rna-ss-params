@@ -1,6 +1,6 @@
 use utils::*;
 
-pub type StackDeltaFes = HashMap<(BasePair, BasePair), FreeEnergy, Hasher>;
+pub type StackDeltaFes = FxHashMap<(BasePair, BasePair), FreeEnergy>;
 
 pub const HELIX_INTERMOLECULAR_INIT_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 4.09;
 pub const HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 0.45;

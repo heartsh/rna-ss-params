@@ -32,7 +32,6 @@ pub const UC: BasePair = (U, C);
 pub const UG: BasePair = (U, G);
 pub const UU: BasePair = (U, U);
 
-#[inline]
 pub fn scale(free_energy: FreeEnergy) -> FreeEnergy {
   - INVERSE_TEMPERATURE * free_energy
 }

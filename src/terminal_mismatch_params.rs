@@ -1,6 +1,6 @@
 use utils::*;
 
-pub type TmDeltaFes = HashMap<(BasePair, BasePair), FreeEnergy, Hasher>;
+pub type TmDeltaFes = FxHashMap<(BasePair, BasePair), FreeEnergy>;
 
 lazy_static! {
   pub static ref TM_DELTA_FES: TmDeltaFes = {
