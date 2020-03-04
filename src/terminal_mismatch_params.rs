@@ -1,10 +1,12 @@
 use utils::*;
 
-pub type TmDeltaFes = FxHashMap<(BasePair, BasePair), FreeEnergy>;
+// pub type TmDeltaFes = FxHashMap<(BasePair, BasePair), FreeEnergy>;
+pub type TmDeltaFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 
 lazy_static! {
   pub static ref TM_DELTA_FES: TmDeltaFes = {
-    [
+    let mut tm_delta_fes = [[[[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in [
       // For the base pair "AU" against which another base pair is stacked.
       ((AU, AA), -0.8), ((AU, AC), -1.0), ((AU, AG), -0.8), ((AU, AU), -1.0),
       ((AU, CA), -0.6), ((AU, CC), -0.7), ((AU, CG), -0.6), ((AU, CU), -0.7),
@@ -35,6 +37,20 @@ lazy_static! {
       ((UG, CA), -0.7), ((UG, CC), -0.6), ((UG, CG), -0.7), ((UG, CU), -0.5),
       ((UG, GA), -0.5), ((UG, GC), -0.8), ((UG, GG), -0.8), ((UG, GU), -0.8),
       ((UG, UA), -0.7), ((UG, UC), -0.6), ((UG, UG), -0.7), ((UG, UU), -0.5),
-    ].iter().cloned().collect()
+    ].iter() {tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);}
+    tm_delta_fes
+  };
+  pub static ref EXP_TM_DELTA_FES: TmDeltaFes = {
+    let mut exp_tm_delta_fes = TM_DELTA_FES.clone();
+    for fe_sets in &mut exp_tm_delta_fes {
+      for fe_set in fe_sets {
+        for fes in fe_set {
+          for fe in fes {
+            *fe = fe.exp();
+          }
+        }
+      }
+    }
+    exp_tm_delta_fes
   };
 }

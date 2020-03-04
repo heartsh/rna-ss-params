@@ -1,12 +1,12 @@
 use utils::*;
 
 pub type InitIlDeltaFes = Vec<FreeEnergy>;
-pub type IlTmBonusDeltaFes = FxHashMap<BasePair, FreeEnergy>;
-pub type OneVs1IlDeltaFes = FxHashMap<(BasePair, BasePair, BasePair), FreeEnergy>;
+pub type IlTmBonusDeltaFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
+pub type OneVs1IlDeltaFes = [[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 pub type OneVs2Il = (BasePair, Base);
-pub type OneVs2IlDeltaFes = FxHashMap<(BasePair, OneVs2Il, BasePair), FreeEnergy>;
+pub type OneVs2IlDeltaFes = [[[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 pub type TwoVs2Il = (BasePair, BasePair);
-pub type TwoVs2IlDeltaFes = FxHashMap<(BasePair, TwoVs2Il, BasePair), FreeEnergy>;
+pub type TwoVs2IlDeltaFes = [[[[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 
 pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: usize = 7;
 pub const COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_IL_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 1.08;
@@ -25,15 +25,36 @@ lazy_static! {
   };
   pub static ref EXP_INIT_IL_DELTA_FES: InitIlDeltaFes = {INIT_IL_DELTA_FES.iter().map(|&x| {x.exp()}).collect()};
   pub static ref TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
-    [(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)].iter().map(|&(x, y)| {(x, scale(y))}).collect()
+    let mut two_vs_3_il_tm_bonus_delta_fes = [[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in &[(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)] {two_vs_3_il_tm_bonus_delta_fes[x.0][x.1] = scale(y);}
+    two_vs_3_il_tm_bonus_delta_fes
   };
-  pub static ref EXP_TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {TWO_VS_3_IL_TM_BONUS_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
+  pub static ref EXP_TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
+    let mut exp_two_vs_3_il_tm_bonus_delta_fes = TWO_VS_3_IL_TM_BONUS_DELTA_FES.clone();
+    for fes in &mut exp_two_vs_3_il_tm_bonus_delta_fes {
+      for fe in fes {
+        *fe = fe.exp();
+      }
+    }
+    exp_two_vs_3_il_tm_bonus_delta_fes
+  };
   pub static ref OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
-    [(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)].iter().map(|&(x, y)| {(x, scale(y))}).collect()
+    let mut other_il_tm_bonus_delta_fes = [[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in &[(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)] {other_il_tm_bonus_delta_fes[x.0][x.1] = scale(y);}
+    other_il_tm_bonus_delta_fes
   };
-  pub static ref EXP_OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {OTHER_IL_TM_BONUS_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
+  pub static ref EXP_OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {
+    let mut exp_other_il_tm_bonus_delta_fes = OTHER_IL_TM_BONUS_DELTA_FES.clone();
+    for fes in &mut exp_other_il_tm_bonus_delta_fes {
+      for fe in fes {
+        *fe = fe.exp();
+      }
+    }
+    exp_other_il_tm_bonus_delta_fes
+  };
   pub static ref ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {
-    [
+    let mut one_vs_1_il_delta_fes = [[[[[[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in [
       // For internal pairs behind the base pair "AU".
       // For internal pairs between the base pairs "AU" and "AU".
       ((AU, AA, AU), 1.9), ((AU, AC, AU), 1.9), ((AU, AG, AU), 1.9), ((AU, AU, AU), 1.9),
@@ -220,11 +241,30 @@ lazy_static! {
       ((UG, CA, UG), 1.9), ((UG, CC, UG), 1.9), ((UG, CG, UG), 1.9), ((UG, CU, UG), 1.9),
       ((UG, GA, UG), 1.9), ((UG, GC, UG), 1.9), ((UG, GG, UG), -0.7), ((UG, GU, UG), 1.9),
       ((UG, UA, UG), 1.9), ((UG, UC, UG), 1.9), ((UG, UG, UG), 1.9), ((UG, UU, UG), 1.6),
-    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
+    ].iter() {one_vs_1_il_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1][(x.2).0][(x.2).1] = scale(y);}
+    one_vs_1_il_delta_fes
   };
-  pub static ref EXP_ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {ONE_VS_1_IL_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
+
+  pub static ref EXP_ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {
+    let mut exp_one_vs_1_il_delta_fes = ONE_VS_1_IL_DELTA_FES.clone();
+    for fived_fe_mat in &mut exp_one_vs_1_il_delta_fes {
+      for fourd_fe_mat in fived_fe_mat {
+        for threed_fe_mat in fourd_fe_mat {
+          for twod_fe_mat in threed_fe_mat {
+            for oned_fe_mat in twod_fe_mat {
+              for fe in oned_fe_mat {
+                *fe = fe.exp();
+              }
+            }
+          }
+        }
+      }
+    }
+    exp_one_vs_1_il_delta_fes
+  };
   pub static ref ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {
-    [
+    let mut one_vs_2_il_delta_fes = [[[[[[[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
       ((AU, (AA, A), AU), 3.7), ((AU, (AC, A), AU), 3.7), ((AU, (AG, A), AU), 3.7), ((AU, (AU, A), AU), 3.7),
@@ -951,11 +991,32 @@ lazy_static! {
       ((UG, (CA, U), UG), 3.7), ((UG, (CC, U), UG), 3.7), ((UG, (CG, U), UG), 3.7), ((UG, (CU, U), UG), 3.7),
       ((UG, (GA, U), UG), 2.6), ((UG, (GC, U), UG), 3.7), ((UG, (GG, U), UG), 2.6), ((UG, (GU, U), UG), 3.7),
       ((UG, (UA, U), UG), 3.0), ((UG, (UC, U), UG), 3.0), ((UG, (UG, U), UG), 3.0), ((UG, (UU, U), UG), 3.0),
-    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
+    ].iter() {one_vs_2_il_delta_fes[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][(x.1).1][(x.2).0][(x.2).1] = scale(y);}
+    one_vs_2_il_delta_fes
   };
-  pub static ref EXP_ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {ONE_VS_2_IL_DELTA_FES.iter().map(|(x, &y)| {(*x, y.exp())}).collect()};
+
+  pub static ref EXP_ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {
+    let mut exp_one_vs_2_il_delta_fes = ONE_VS_2_IL_DELTA_FES.clone();
+    for sixd_fe_mat in &mut exp_one_vs_2_il_delta_fes {
+      for fived_fe_mat in sixd_fe_mat {
+        for fourd_fe_mat in fived_fe_mat {
+          for threed_fe_mat in fourd_fe_mat {
+            for twod_fe_mat in threed_fe_mat {
+              for oned_fe_mat in twod_fe_mat {
+                for fe in oned_fe_mat {
+                  *fe = fe.exp();
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    exp_one_vs_2_il_delta_fes
+  };
   pub static ref TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {
-    [
+    let mut two_vs_2_il_delta_fes = [[[[[[[[NEG_INFINITY; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+    for &(x, y) in [
       // For internal loops behind the base pair "AU".
       // For internal loops between the base pairs "AU" and "AU".
       ((AU, (AA, AA), AU), 2.8), ((AU, (AA, AC), AU), 2.3), ((AU, (AA, AG), AU), 1.7), ((AU, (AA, AU), AU), 2.3), ((AU, (AA, CA), AU), 2.8), ((AU, (AA, CC), AU), 2.8), ((AU, (AA, CG), AU), 2.8), ((AU, (AA, CU), AU), 2.8), ((AU, (AA, GA), AU), 1.8), ((AU, (AA, GC), AU), 2.3), ((AU, (AA, GG), AU), 1.2), ((AU, (AA, GU), AU), 2.3), ((AU, (AA, UA), AU), 2.8), ((AU, (AA, UC), AU), 2.5), ((AU, (AA, UG), AU), 2.8), ((AU, (AA, UU), AU), 2.5),
@@ -1570,7 +1631,29 @@ lazy_static! {
       ((UG, (UC, AA), UG), 3.4), ((UG, (UC, AC), UG), 3.1), ((UG, (UC, AG), UG), 2.9), ((UG, (UC, AU), UG), 3.1), ((UG, (UC, CA), UG), 3.1), ((UG, (UC, CC), UG), 3.1), ((UG, (UC, CG), UG), 3.1), ((UG, (UC, CU), UG), 3.1), ((UG, (UC, GA), UG), 3.3), ((UG, (UC, GC), UG), 3.1), ((UG, (UC, GG), UG), 1.8), ((UG, (UC, GU), UG), 3.1), ((UG, (UC, UA), UG), 3.1), ((UG, (UC, UC), UG), 3.1), ((UG, (UC, UG), UG), 3.1), ((UG, (UC, UU), UG), 3.1),
       ((UG, (UG, AA), UG), 3.4), ((UG, (UG, AC), UG), 3.1), ((UG, (UG, AG), UG), 2.3), ((UG, (UG, AU), UG), 3.1), ((UG, (UG, CA), UG), 3.1), ((UG, (UG, CC), UG), 3.1), ((UG, (UG, CG), UG), 3.1), ((UG, (UG, CU), UG), 3.1), ((UG, (UG, GA), UG), 2.7), ((UG, (UG, GC), UG), 3.1), ((UG, (UG, GG), UG), 1.8), ((UG, (UG, GU), UG), 3.1), ((UG, (UG, UA), UG), 3.1), ((UG, (UG, UC), UG), 3.1), ((UG, (UG, UG), UG), 3.1), ((UG, (UG, UU), UG), 3.1),
       ((UG, (UU, AA), UG), 4.0), ((UG, (UU, AC), UG), 3.1), ((UG, (UU, AG), UG), 2.3), ((UG, (UU, AU), UG), 3.1), ((UG, (UU, CA), UG), 3.1), ((UG, (UU, CC), UG), 3.1), ((UG, (UU, CG), UG), 3.1), ((UG, (UU, CU), UG), 3.1), ((UG, (UU, GA), UG), 2.7), ((UG, (UU, GC), UG), 3.1), ((UG, (UU, GG), UG), 3.1), ((UG, (UU, GU), UG), 3.1), ((UG, (UU, UA), UG), 3.1), ((UG, (UU, UC), UG), 3.1), ((UG, (UU, UG), UG), 3.1), ((UG, (UU, UU), UG), 3.1),
-    ].iter().map(|&(x, y)| {(x, scale(y))}).collect()
+    ].iter() {two_vs_2_il_delta_fes[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][((x.1).1).0][((x.1).1).1][(x.2).0][(x.2).1] = scale(y);}
+    two_vs_2_il_delta_fes
   };
-  pub static ref EXP_TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {TWO_VS_2_IL_DELTA_FES.iter().map(|(x, &y)| {(x.clone(), y.exp())}).collect()};
+
+  pub static ref EXP_TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {
+    let mut exp_two_vs_2_il_delta_fes = TWO_VS_2_IL_DELTA_FES.clone();
+    for sevend_fe_mat in &mut exp_two_vs_2_il_delta_fes {
+      for sixd_fe_mat in sevend_fe_mat {
+        for fived_fe_mat in sixd_fe_mat {
+          for fourd_fe_mat in fived_fe_mat {
+            for threed_fe_mat in fourd_fe_mat {
+              for twod_fe_mat in threed_fe_mat {
+                for oned_fe_mat in twod_fe_mat {
+                  for fe in oned_fe_mat {
+                    *fe = fe.exp();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    exp_two_vs_2_il_delta_fes
+  };
 }
