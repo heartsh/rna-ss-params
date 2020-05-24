@@ -1,6 +1,5 @@
 use utils::*;
 
-// pub type TmDeltaFes = FxHashMap<(BasePair, BasePair), FreeEnergy>;
 pub type TmDeltaFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 
 lazy_static! {
@@ -39,18 +38,5 @@ lazy_static! {
       ((UG, UA), -0.7), ((UG, UC), -0.6), ((UG, UG), -0.7), ((UG, UU), -0.5),
     ].iter() {tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);}
     tm_delta_fes
-  };
-  pub static ref EXP_TM_DELTA_FES: TmDeltaFes = {
-    let mut exp_tm_delta_fes = TM_DELTA_FES.clone();
-    for fe_sets in &mut exp_tm_delta_fes {
-      for fe_set in fe_sets {
-        for fes in fe_set {
-          for fe in fes {
-            *fe = fe.exp();
-          }
-        }
-      }
-    }
-    exp_tm_delta_fes
   };
 }
