@@ -1,6 +1,6 @@
 use utils::*;
 
-pub type TmDeltaFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+/* pub type TmDeltaFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 
 lazy_static! {
   pub static ref TM_DELTA_FES: TmDeltaFes = {
@@ -39,4 +39,4 @@ lazy_static! {
     ].iter() {tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);}
     tm_delta_fes
   };
-}
+} */
