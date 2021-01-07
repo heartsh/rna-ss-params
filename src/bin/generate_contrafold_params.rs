@@ -6,14 +6,14 @@ fn main() {
   let output_file_path = Path::new("./src/compiled_free_energy_params_contra.rs");
   let mut writer_2_output_file = BufWriter::new(File::create(&output_file_path).unwrap());
   let mut buf = format!("use utils::*;\n");
-  let mut base_pair_fes: ContraBasePairFes = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut base_pair_fes: ContraBasePairFes = [[0.; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     (AU, 0.59791199), (UA, 0.59791199), (CG, 1.544290641), (GC, 1.544290641), (GU, -0.01304754992), (UG, -0.01304754992),
   ].iter() {
     base_pair_fes[x.0][x.1] = y;
   }
   buf += &format!("pub const CONTRA_BASE_PAIR_FES: ContraBasePairFes = {:?};\n", &base_pair_fes);
-  let mut terminal_mismatch_fes: ContraTerminalMismatchFes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut terminal_mismatch_fes: ContraTerminalMismatchFes = [[[[0.; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     ((AU, AA), -0.184546064),
     ((AU, AC), -0.1181844187),
@@ -116,7 +116,7 @@ fn main() {
   }
 
   buf += &format!("pub const CONTRA_TERMINAL_MISMATCH_FES: ContraTerminalMismatchFes = {:?};\n", &terminal_mismatch_fes);
-  let mut stack_fes: ContraStackFes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut stack_fes: ContraStackFes = [[[[0.; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     ((AU, AU), 0.1482005248),
     ((AU, CG), 0.4343497127),
@@ -141,13 +141,11 @@ fn main() {
     ((UG, GU), 0.120296538),
   ].iter() {
     stack_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = y;
-    if stack_fes[(x.1).1][(x.1).0][(x.0).1][(x.0).0] == NEG_INF {
-      stack_fes[(x.1).1][(x.1).0][(x.0).1][(x.0).0] = y;
-    }
+    stack_fes[(x.1).1][(x.1).0][(x.0).1][(x.0).0] = y;
   }
 
   buf += &format!("pub const CONTRA_STACK_FES: ContraStackFes = {:?};\n", &stack_fes);
-  let mut helix_closing_fes: ContraHelixClosingFes = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut helix_closing_fes: ContraHelixClosingFes = [[0.; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     (AU, -0.9770893163),
     (CG, -0.4574650937),
@@ -160,7 +158,7 @@ fn main() {
   }
   buf += &format!("pub const CONTRA_HELIX_CLOSING_FES: ContraHelixClosingFes = {:?};\n", &helix_closing_fes);
 
-  let mut left_dangle_fes: ContraDangleFes = [[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut left_dangle_fes: ContraDangleFes = [[[0.; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[
     // For the base pair "AU" against which a base is stacked.
     ((AU, A), -0.1251037681), ((AU, C), 0.0441606708), ((AU, G), -0.02541879082), ((AU, U), 0.00785098466), 
@@ -179,7 +177,7 @@ fn main() {
   }
   buf += &format!("pub const CONTRA_LEFT_DANGLE_FES: ContraDangleFes = {:?};\n", &left_dangle_fes);
 
-  let mut right_dangle_fes: ContraDangleFes = [[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut right_dangle_fes: ContraDangleFes = [[[0.; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[
     // For the base pair "AU" against which a base is stacked.
     ((AU, A), 0.03232578201), ((AU, C), -0.09096819493), ((AU, G), -0.0740750973), ((AU, U), -0.01621157379), 
@@ -198,6 +196,7 @@ fn main() {
   }
 
   buf += &format!("pub const CONTRA_RIGHT_DANGLE_FES: ContraDangleFes = {:?};\n", &right_dangle_fes);
+  let mut hl_length_fes_at_least = [0.; CONTRA_MAX_LOOP_LEN + 1];
   let mut hl_length_fes = [0.; CONTRA_MAX_LOOP_LEN + 1];
   let mut sum = 0.;
   for (i, &x) in [
@@ -234,9 +233,12 @@ fn main() {
     0.2329937249,
   ].iter().enumerate() {
     sum += x;
+    hl_length_fes_at_least[i] = x;
     hl_length_fes[i] = sum;
   }
+  buf += &format!("pub const CONTRA_HL_LENGTH_FES_AT_LEAST: ContraHlLengthFes = {:?};\n", &hl_length_fes_at_least);
   buf += &format!("pub const CONTRA_HL_LENGTH_FES: ContraHlLengthFes = {:?};\n", &hl_length_fes);
+  let mut bl_length_fes_at_least = [0.; CONTRA_MAX_LOOP_LEN];
   let mut bl_length_fes = [0.; CONTRA_MAX_LOOP_LEN];
   sum = 0.;
   for (i, &x) in [
@@ -272,10 +274,13 @@ fn main() {
     -0.005153626846,
   ].iter().enumerate() {
     sum += x;
+    bl_length_fes_at_least[i] = x;
     bl_length_fes[i] = sum;
   }
+  buf += &format!("pub const CONTRA_BL_LENGTH_FES_AT_LEAST: ContraBlLengthFes = {:?};\n", &bl_length_fes_at_least);
   buf += &format!("pub const CONTRA_BL_LENGTH_FES: ContraBlLengthFes = {:?};\n", &bl_length_fes);
 
+  let mut il_length_fes_at_least = [0.; CONTRA_MAX_LOOP_LEN - 1];
   let mut il_length_fes = [0.; CONTRA_MAX_LOOP_LEN - 1];
   sum = 0.;
   for (i, &x) in [
@@ -310,10 +315,13 @@ fn main() {
     0.006875738004,
   ].iter().enumerate() {
     sum += x;
+    il_length_fes_at_least[i] = x;
     il_length_fes[i] = sum;
   }
+  buf += &format!("pub const CONTRA_IL_LENGTH_FES_AT_LEAST: ContraIlLengthFes = {:?};\n", &il_length_fes_at_least);
   buf += &format!("pub const CONTRA_IL_LENGTH_FES: ContraIlLengthFes = {:?};\n", &il_length_fes);
 
+  let mut il_symm_length_fes_at_least = [0.; CONTRA_MAX_LOOP_LEN / 2];
   let mut il_symm_length_fes = [0.; CONTRA_MAX_LOOP_LEN / 2];
   sum = 0.;
   for (i, &x) in [
@@ -334,10 +342,13 @@ fn main() {
     -0.02232234236,
   ].iter().enumerate() {
     sum += x;
+    il_symm_length_fes_at_least[i] = x;
     il_symm_length_fes[i] = sum;
   }
+  buf += &format!("pub const CONTRA_IL_SYMM_LENGTH_FES_AT_LEAST: ContraIlSymmLengthFes = {:?};\n", &il_symm_length_fes_at_least);
   buf += &format!("pub const CONTRA_IL_SYMM_LENGTH_FES: ContraIlSymmLengthFes = {:?};\n", &il_symm_length_fes);
 
+  let mut il_asymm_length_fes_at_least = [0.; CONTRA_MAX_LOOP_LEN - 2];
   let mut il_asymm_length_fes = [0.; CONTRA_MAX_LOOP_LEN - 2];
   sum = 0.;
   for (i, &x) in [
@@ -371,8 +382,10 @@ fn main() {
     -0.002545113932,
   ].iter().enumerate() {
     sum += x;
+    il_asymm_length_fes_at_least[i] = x;
     il_asymm_length_fes[i] = sum;
   }
+  buf += &format!("pub const CONTRA_IL_ASYMM_LENGTH_FES_AT_LEAST: ContraIlAsymmLengthFes = {:?};\n", &il_asymm_length_fes_at_least);
   buf += &format!("pub const CONTRA_IL_ASYMM_LENGTH_FES: ContraIlAsymmLengthFes = {:?};\n", &il_asymm_length_fes);
   let _ = writer_2_output_file.write_all(buf.as_bytes());
 }
