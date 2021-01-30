@@ -1,8 +1,9 @@
 pub use bio_seq_algos::utils::*;
 pub use std::path::Path;
 pub use std::io::prelude::*;
-pub use std::io::BufWriter;
+pub use std::io::{BufReader, BufWriter};
 pub use std::fs::File;
+pub use getopts::Options;
 
 pub type FreeEnergy = Prob;
 pub type Base = usize;
@@ -28,7 +29,7 @@ pub type DeDeltaFes = [[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]
 pub type ContraBasePairFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
 pub type ContraTerminalMismatchFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 pub type ContraHlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN + 1];
-pub type ContraIlExplicitFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
+pub type ContraIlExplicitFes = [[FreeEnergy; CONTRA_MAX_IL_EXPLICIT_LEN]; CONTRA_MAX_IL_EXPLICIT_LEN];
 pub type ContraBlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN];
 pub type ContraIlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN - 1];
 pub type ContraIlSymmLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN / 2];
@@ -38,6 +39,9 @@ pub type ContraIl1x1Fes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
 pub type ContraStackFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
 pub type ContraHelixClosingFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
 pub type ContraDangleFes = [[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+
+type Arg = String;
+pub type Args = Vec<Arg>;
 
 pub const NUM_OF_TRANSITS: usize = 3;
 pub const CONST_4_INIT_ML_DELTA_FE: FreeEnergy = - INVERSE_TEMPERATURE * 9.3;
@@ -109,29 +113,33 @@ lazy_static! {
   };
 }
 
-pub const CONTRA_IL_EXPLICIT_FES: ContraIlExplicitFes = [
-  [-0.1754591076, 0.03083787104, -0.171565435, -0.2294680983],
-  [0.03083787104,  -0.1304072693, -0.07730329553, 0.2782767264],
-  [-0.171565435, -0.07730329553, -0.02898949617, 0.3112350694],
-  [-0.2294680983, 0.2782767264, 0.3112350694, -0.3226348245],
-];
-pub const CONTRA_BL_0X1_FES: ContraBl0x1Fes = [
-  -0.1216861662, -0.07111241127, 0.008947026647, -0.002685763742
-];
-pub const CONTRA_IL_1X1_FES: ContraIl1x1Fes = [
-  [0.2944404686, 0.08641360967, -0.3664197228, -0.2053107048],
-  [0.08641360967, -0.1582543624, 0.4175273724, 0.1368762582],
-  [-0.3664197228, 0.4175273724,-0.1193514754, -0.4188101413],
-  [-0.2053107048, 0.1368762582, -0.4188101413, 0.147140653],
-];
-
 pub const CONTRA_MAX_LOOP_LEN: usize = 30;
-pub const CONTRA_ML_BASE_FE: FreeEnergy = -1.199055076;
-pub const CONTRA_ML_UNPAIRED_FE: FreeEnergy = -0.1983300391;
-pub const CONTRA_ML_PAIRED_FE: FreeEnergy = -0.9253883752;
-pub const CONTRA_EL_UNPAIRED_FE: FreeEnergy = -0.00972883093;
-pub const CONTRA_EL_PAIRED_FE: FreeEnergy = -0.0009674111431;
+pub const CONTRA_MAX_IL_EXPLICIT_LEN: usize = 4;
+
+pub const SMALL_A: u8 = 'a' as u8;
+pub const BIG_A: u8 = 'A' as u8;
+pub const SMALL_C: u8 = 'c' as u8;
+pub const BIG_C: u8 = 'C' as u8;
+pub const SMALL_G: u8 = 'g' as u8;
+pub const BIG_G: u8 = 'G' as u8;
+pub const SMALL_U: u8 = 'u' as u8;
+pub const BIG_U: u8 = 'U' as u8;
 
 pub fn scale(free_energy: FreeEnergy) -> FreeEnergy {
   - INVERSE_TEMPERATURE * free_energy
+}
+
+pub fn print_program_usage(program_name: &str, opts: &Options) {
+  let program_usage = format!("The usage of this program: {} [options]", program_name);
+  print!("{}", opts.usage(&program_usage));
+}
+
+pub fn convert_char<'a>(c: u8) -> usize {
+  match c {
+    SMALL_A | BIG_A => A,
+    SMALL_C | BIG_C => C,
+    SMALL_G | BIG_G => G,
+    SMALL_U | BIG_U => U,
+    _ => {assert!(false); U},
+  }
 }

@@ -3,7 +3,7 @@ extern crate rna_ss_params;
 use rna_ss_params::utils::*;
 
 fn main() {
-  let mut output_file_path = Path::new("./src/compiled_free_energy_params_turner.rs");
+  let output_file_path = Path::new("./src/compiled_free_energy_params_turner.rs");
   let mut writer_2_output_file = BufWriter::new(File::create(&output_file_path).unwrap());
   let mut buf = format!("use utils::*;\n\n");
   // Generate bulge loop parameters.
@@ -57,7 +57,6 @@ fn main() {
     INIT_HL_DELTA_FES.push(basic_init_hl_delta_fe + COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE * (i as FreeEnergy / (MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1) as FreeEnergy).ln());
   }
   buf += &format!("pub const INIT_HL_DELTA_FES: InitHlDeltaFes = {:?};\n", &INIT_HL_DELTA_FES);
-  let EXP_INIT_HL_DELTA_FES: Vec<FreeEnergy> = INIT_HL_DELTA_FES.iter().map(|&x| {x.exp()}).collect();
   let INIT_IL_DELTA_FES: Vec<FreeEnergy> = vec![
     0., 0., 0., 0., 1.1, 2.0, 2.0, 2.1, 2.3, 2.4, 2.5,
     2.6, 2.7, 2.8, 2.9, 2.9, 3., 3.1, 3.1, 3.2, 3.3,
