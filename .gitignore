@@ -5,4 +5,4 @@ target
 !Cargo.toml
 !.gitignore
 !README.md
-!assets/contrafold.params.noncomplementary
+!assets/contrafold.params.complementary
