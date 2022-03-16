@@ -1,10 +1,10 @@
-pub use bio_seq_algos::utils::*;
 pub use std::path::Path;
 pub use std::io::prelude::*;
 pub use std::io::{BufReader, BufWriter};
 pub use std::fs::File;
 pub use getopts::Options;
 
+pub type Prob = f32;
 pub type FreeEnergy = Prob;
 pub type Base = usize;
 pub type BasePair = (Base, Base);
