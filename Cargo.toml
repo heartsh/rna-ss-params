@@ -9,7 +9,7 @@ keywords = ["bioinformatics", "rna", "secondary-structure"]
 license = "MIT"
 
 [dependencies]
-lazy_static = "0.1"
+lazy_static = "1.4"
 getopts = "0.2"
 
 [lib]

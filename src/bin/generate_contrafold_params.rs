@@ -18,7 +18,7 @@ fn main() {
     Ok(opt) => opt,
     Err(failure) => {
       print_program_usage(&program_name, &opts);
-      panic!(failure.to_string())
+      panic!("{}", failure.to_string())
     }
   };
   if matches.opt_present("h") {
@@ -132,7 +132,6 @@ fn main() {
       let prefix = "internal_explicit_";
       let prefix_len = prefix.len();
       let suffix = feature_name.split_at(prefix_len).1;
-      let suffix_chars = suffix.chars().collect::<Vec<char>>();
       let len_pair: (usize, usize) = (suffix[0..1].parse().unwrap(), suffix[2..3].parse().unwrap());
       il_explicit_fes[len_pair.0 - 1][len_pair.1 - 1] = feature_weight;
       il_explicit_fes[len_pair.1 - 1][len_pair.0 - 1] = feature_weight;

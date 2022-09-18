@@ -7,7 +7,7 @@ fn main() {
   let mut writer_2_output_file = BufWriter::new(File::create(&output_file_path).unwrap());
   let mut buf = format!("use utils::*;\n\n");
   // Generate bulge loop parameters.
-  let INIT_BL_DELTA_FES: Vec<FreeEnergy> = [
+  let init_bl_delta_fes: Vec<FreeEnergy> = [
     0., 3.8, 2.8, 3.2, 3.6, 4.0, 4.4, 4.6, 4.7, 4.8, 4.9, 5., 5.1, 5.2, 5.3, 5.4, 5.4, 5.5, 5.5,
     5.6, 5.7, 5.7, 5.8, 5.8, 5.8, 5.9, 5.9, 6., 6., 6., 6.1,
   ]
@@ -16,10 +16,10 @@ fn main() {
   .collect();
   buf += &format!(
     "pub const INIT_BL_DELTA_FES: InitBlDeltaFes = {:?};\n",
-    &INIT_BL_DELTA_FES
+    &init_bl_delta_fes
   );
   // Generate dangling end parameters.
-  let mut THREE_PRIME_DE_DELTA_FES: DeDeltaFes =
+  let mut three_prime_de_delta_fes: DeDeltaFes =
     [[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[
     // For the base pair "AU" against which a base is stacked.
@@ -53,13 +53,13 @@ fn main() {
     ((UG, G), -0.8),
     ((UG, U), -0.6),
   ] {
-    THREE_PRIME_DE_DELTA_FES[(x.0).0][(x.0).1][x.1] = scale(y);
+    three_prime_de_delta_fes[(x.0).0][(x.0).1][x.1] = scale(y);
   }
   buf += &format!(
     "pub const THREE_PRIME_DE_DELTA_FES: DeDeltaFes = {:?};\n",
-    &THREE_PRIME_DE_DELTA_FES
+    &three_prime_de_delta_fes
   );
-  let mut FIVE_PRIME_DE_DELTA_FES = [[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut five_prime_de_delta_fes = [[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[
     // For the base pair "AU" against which a base is stacked.
     ((AU, A), -0.3),
@@ -92,21 +92,21 @@ fn main() {
     ((UG, G), -0.2),
     ((UG, U), -0.2),
   ] {
-    FIVE_PRIME_DE_DELTA_FES[(x.0).0][(x.0).1][x.1] = scale(y);
+    five_prime_de_delta_fes[(x.0).0][(x.0).1][x.1] = scale(y);
   }
   buf += &format!(
     "pub const FIVE_PRIME_DE_DELTA_FES: DeDeltaFes = {:?};\n",
-    &FIVE_PRIME_DE_DELTA_FES
+    &five_prime_de_delta_fes
   );
-  let mut INIT_HL_DELTA_FES: Vec<FreeEnergy> = vec![0., 0., 0., 5.4, 5.6, 5.7, 5.4, 6.0, 5.5, 6.4]
+  let mut init_hl_delta_fes: Vec<FreeEnergy> = vec![0., 0., 0., 5.4, 5.6, 5.7, 5.4, 6.0, 5.5, 6.4]
     .iter()
     .map(|&x| scale(x))
     .collect();
-  let len_of_init_hl_delta_fes = INIT_HL_DELTA_FES.len();
+  let len_of_init_hl_delta_fes = init_hl_delta_fes.len();
   let basic_init_hl_delta_fe =
-    INIT_HL_DELTA_FES[MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1];
+    init_hl_delta_fes[MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE - 1];
   for i in len_of_init_hl_delta_fes..MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE + 1 {
-    INIT_HL_DELTA_FES.push(
+    init_hl_delta_fes.push(
       basic_init_hl_delta_fe
         + COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE
           * (i as FreeEnergy
@@ -116,9 +116,9 @@ fn main() {
   }
   buf += &format!(
     "pub const INIT_HL_DELTA_FES: InitHlDeltaFes = {:?};\n",
-    &INIT_HL_DELTA_FES
+    &init_hl_delta_fes
   );
-  let INIT_IL_DELTA_FES: Vec<FreeEnergy> = vec![
+  let init_il_delta_fes: Vec<FreeEnergy> = vec![
     0., 0., 0., 0., 1.1, 2.0, 2.0, 2.1, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.9, 3., 3.1, 3.1, 3.2,
     3.3, 3.3, 3.4, 3.4, 3.5, 3.5, 3.5, 3.6, 3.6, 3.7, 3.7,
   ]
@@ -127,25 +127,25 @@ fn main() {
   .collect();
   buf += &format!(
     "pub const INIT_IL_DELTA_FES: InitIlDeltaFes = {:?};\n",
-    &INIT_IL_DELTA_FES
+    &init_il_delta_fes
   );
-  let mut TWO_VS_3_IL_TM_BONUS_DELTA_FES = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut two_vs_3_il_tm_bonus_delta_fes = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[(AG, -0.5), (GA, -1.2), (GG, -0.8), (UU, -0.4)] {
-    TWO_VS_3_IL_TM_BONUS_DELTA_FES[x.0][x.1] = scale(y);
+    two_vs_3_il_tm_bonus_delta_fes[x.0][x.1] = scale(y);
   }
   buf += &format!(
     "pub const TWO_VS_3_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {:?};\n",
-    &TWO_VS_3_IL_TM_BONUS_DELTA_FES
+    &two_vs_3_il_tm_bonus_delta_fes
   );
-  let mut OTHER_IL_TM_BONUS_DELTA_FES = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut other_il_tm_bonus_delta_fes = [[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in &[(AG, -0.8), (GA, -1.0), (GG, -1.2), (UU, -0.7)] {
-    OTHER_IL_TM_BONUS_DELTA_FES[x.0][x.1] = scale(y);
+    other_il_tm_bonus_delta_fes[x.0][x.1] = scale(y);
   }
   buf += &format!(
     "pub const OTHER_IL_TM_BONUS_DELTA_FES: IlTmBonusDeltaFes = {:?};\n",
-    &OTHER_IL_TM_BONUS_DELTA_FES
+    &other_il_tm_bonus_delta_fes
   );
-  let mut ONE_VS_1_IL_DELTA_FES = [[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut one_vs_1_il_delta_fes = [[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
     NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For internal pairs behind the base pair "AU".
@@ -769,14 +769,14 @@ fn main() {
   ]
   .iter()
   {
-    ONE_VS_1_IL_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1][(x.2).0][(x.2).1] = scale(y);
+    one_vs_1_il_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1][(x.2).0][(x.2).1] = scale(y);
   }
   buf += &format!(
     "pub const ONE_VS_1_IL_DELTA_FES: OneVs1IlDeltaFes = {:?};\n",
-    &ONE_VS_1_IL_DELTA_FES
+    &one_vs_1_il_delta_fes
   );
 
-  let mut ONE_VS_2_IL_DELTA_FES = [[[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut one_vs_2_il_delta_fes = [[[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
     NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For internal loops behind the base pair "AU".
@@ -3236,15 +3236,15 @@ fn main() {
   ]
   .iter()
   {
-    ONE_VS_2_IL_DELTA_FES[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][(x.1).1][(x.2).0][(x.2).1] =
+    one_vs_2_il_delta_fes[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][(x.1).1][(x.2).0][(x.2).1] =
       scale(y);
   }
   buf += &format!(
     "pub const ONE_VS_2_IL_DELTA_FES: OneVs2IlDeltaFes = {:?};\n",
-    &ONE_VS_2_IL_DELTA_FES
+    &one_vs_2_il_delta_fes
   );
 
-  let mut TWO_VS_2_IL_DELTA_FES = [[[[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut two_vs_2_il_delta_fes = [[[[[[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
     NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
     NUM_OF_BASES];
   for &(x, y) in [
@@ -12505,15 +12505,15 @@ fn main() {
   ]
   .iter()
   {
-    TWO_VS_2_IL_DELTA_FES[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][((x.1).1).0][((x.1).1).1]
+    two_vs_2_il_delta_fes[(x.0).0][(x.0).1][((x.1).0).0][((x.1).0).1][((x.1).1).0][((x.1).1).1]
       [(x.2).0][(x.2).1] = scale(y);
   }
   buf += &format!(
     "pub const TWO_VS_2_IL_DELTA_FES: TwoVs2IlDeltaFes = {:?};\n",
-    &TWO_VS_2_IL_DELTA_FES
+    &two_vs_2_il_delta_fes
   );
 
-  let mut STACK_DELTA_FES = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut stack_delta_fes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
     ((AU, AU), -0.9),
@@ -12560,13 +12560,13 @@ fn main() {
   ]
   .iter()
   {
-    STACK_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    stack_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const STACK_DELTA_FES: StackDeltaFes = {:?};\n",
-    &STACK_DELTA_FES
+    &stack_delta_fes
   );
-  let mut HL_TM_DELTA_FES = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut hl_tm_delta_fes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
     ((AU, AA), -0.3),
@@ -12673,14 +12673,14 @@ fn main() {
   ]
   .iter()
   {
-    HL_TM_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    hl_tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const HL_TM_DELTA_FES: HlTmDeltaFes = {:?};\n",
-    &HL_TM_DELTA_FES
+    &hl_tm_delta_fes
   );
 
-  let mut IL_TM_DELTA_FES = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut il_tm_delta_fes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
     ((AU, AA), 0.7),
@@ -12787,14 +12787,14 @@ fn main() {
   ]
   .iter()
   {
-    IL_TM_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    il_tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const IL_TM_DELTA_FES: IlTmDeltaFes = {:?};\n",
-    &IL_TM_DELTA_FES
+    &il_tm_delta_fes
   );
 
-  let mut ONE_VS_MANY_IL_TM_DELTA_FES =
+  let mut one_vs_many_il_tm_delta_fes =
     [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
@@ -12902,14 +12902,14 @@ fn main() {
   ]
   .iter()
   {
-    ONE_VS_MANY_IL_TM_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    one_vs_many_il_tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const ONE_VS_MANY_IL_TM_DELTA_FES: IlTmDeltaFes = {:?};\n",
-    &ONE_VS_MANY_IL_TM_DELTA_FES
+    &one_vs_many_il_tm_delta_fes
   );
 
-  let mut TWO_VS_3_IL_TM_DELTA_FES =
+  let mut two_vs_3_il_tm_delta_fes =
     [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
@@ -13017,14 +13017,14 @@ fn main() {
   ]
   .iter()
   {
-    TWO_VS_3_IL_TM_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    two_vs_3_il_tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const TWO_VS_3_IL_TM_DELTA_FES: IlTmDeltaFes = {:?};\n",
-    &TWO_VS_3_IL_TM_DELTA_FES
+    &two_vs_3_il_tm_delta_fes
   );
 
-  let mut ML_TM_DELTA_FES = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+  let mut ml_tm_delta_fes = [[[[NEG_INF; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
   for &(x, y) in [
     // For the base pair "AU" against which another base pair is stacked.
     ((AU, AA), -0.8),
@@ -13131,11 +13131,11 @@ fn main() {
   ]
   .iter()
   {
-    ML_TM_DELTA_FES[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
+    ml_tm_delta_fes[(x.0).0][(x.0).1][(x.1).0][(x.1).1] = scale(y);
   }
   buf += &format!(
     "pub const ML_TM_DELTA_FES: MlTmDeltaFes = {:?};\n",
-    &ML_TM_DELTA_FES
+    &ml_tm_delta_fes
   );
   let _ = writer_2_output_file.write_all(buf.as_bytes());
 }
