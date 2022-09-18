@@ -3,6 +3,7 @@
 target
 !*.rs
 !Cargo.toml
+!rustfmt.toml
 !.gitignore
 !README.md
 !assets/contrafold.params.complementary
