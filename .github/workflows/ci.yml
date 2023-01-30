@@ -27,7 +27,7 @@ jobs:
         run: |
           cargo install --path . -q
           generate_turner_params
-          generate_contrafold_params ./assets/contrafold.params.complementary
+          generate_contrafold_params -i ./assets/contrafold.params.complementary
           cargo build --release -q
 
   analyze:
