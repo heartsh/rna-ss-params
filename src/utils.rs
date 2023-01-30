@@ -86,7 +86,7 @@ pub const UA: BasePair = (U, A);
 pub const UC: BasePair = (U, C);
 pub const UG: BasePair = (U, G);
 pub const UU: BasePair = (U, U);
-pub const NEG_INF: FreeEnergy = -1000_000_000_000_000.;
+pub const NEG_INF: FreeEnergy = -1_000_000_000_000_000.;
 
 pub const NUM_OF_SPECIAL_HLS: usize = 22;
 pub const MIN_HL_LEN: usize = 3;
@@ -126,14 +126,14 @@ lazy_static! {
 pub const CONTRA_MAX_LOOP_LEN: usize = 30;
 pub const CONTRA_MAX_IL_EXPLICIT_LEN: usize = 4;
 
-pub const SMALL_A: u8 = 'a' as u8;
-pub const BIG_A: u8 = 'A' as u8;
-pub const SMALL_C: u8 = 'c' as u8;
-pub const BIG_C: u8 = 'C' as u8;
-pub const SMALL_G: u8 = 'g' as u8;
-pub const BIG_G: u8 = 'G' as u8;
-pub const SMALL_U: u8 = 'u' as u8;
-pub const BIG_U: u8 = 'U' as u8;
+pub const SMALL_A: u8 = b'a';
+pub const BIG_A: u8 = b'A';
+pub const SMALL_C: u8 = b'c';
+pub const BIG_C: u8 = b'C';
+pub const SMALL_G: u8 = b'g';
+pub const BIG_G: u8 = b'G';
+pub const SMALL_U: u8 = b'u';
+pub const BIG_U: u8 = b'U';
 
 pub fn scale(free_energy: FreeEnergy) -> FreeEnergy {
   -INVERSE_TEMPERATURE * free_energy
@@ -144,15 +144,14 @@ pub fn print_program_usage(program_name: &str, opts: &Options) {
   print!("{}", opts.usage(&program_usage));
 }
 
-pub fn convert_char<'a>(c: u8) -> usize {
+pub fn convert_char(c: u8) -> usize {
   match c {
     SMALL_A | BIG_A => A,
     SMALL_C | BIG_C => C,
     SMALL_G | BIG_G => G,
     SMALL_U | BIG_U => U,
     _ => {
-      assert!(false);
-      U
+      panic!();
     }
   }
 }

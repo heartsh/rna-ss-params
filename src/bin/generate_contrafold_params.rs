@@ -199,12 +199,12 @@ fn main() {
       external_paired = feature_weight;
     } else {
       println!("{}: {}", feature_name, feature_weight);
-      assert!(false);
+      panic!();
     }
   }
   let output_file_path = Path::new("./src/compiled_free_energy_params_contra.rs");
-  let mut writer_2_output_file = BufWriter::new(File::create(&output_file_path).unwrap());
-  let mut buf = format!("use utils::*;\n");
+  let mut writer_2_output_file = BufWriter::new(File::create(output_file_path).unwrap());
+  let mut buf = "use utils::*;\n".to_string();
   buf += &format!(
     "pub const CONTRA_BASE_PAIR_FES: ContraBasePairFes = {:?};\n",
     &base_pair_fes

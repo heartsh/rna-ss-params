@@ -4,8 +4,8 @@ use rna_ss_params::utils::*;
 
 fn main() {
   let output_file_path = Path::new("./src/compiled_free_energy_params_turner.rs");
-  let mut writer_2_output_file = BufWriter::new(File::create(&output_file_path).unwrap());
-  let mut buf = format!("use utils::*;\n\n");
+  let mut writer_2_output_file = BufWriter::new(File::create(output_file_path).unwrap());
+  let mut buf = "use utils::*;\n\n".to_string();
   // Generate bulge loop parameters.
   let init_bl_delta_fes: Vec<FreeEnergy> = [
     0., 3.8, 2.8, 3.2, 3.6, 4.0, 4.4, 4.6, 4.7, 4.8, 4.9, 5., 5.1, 5.2, 5.3, 5.4, 5.4, 5.5, 5.5,
