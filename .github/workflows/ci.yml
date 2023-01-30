@@ -29,6 +29,7 @@ jobs:
           generate_turner_params
           generate_contrafold_params -i ./assets/contrafold.params.complementary
           cargo build --release -q
+          cargo package -q
 
   analyze:
     name: Analyze
