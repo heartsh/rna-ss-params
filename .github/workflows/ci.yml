@@ -28,8 +28,8 @@ jobs:
           cargo install --path . -q
           generate_turner_params
           generate_contrafold_params -i ./assets/contrafold.params.complementary
-          cargo build --release -q
-          cargo package -q
+          cargo check --release -q
+          cargo package --allow-dirty -q
 
   analyze:
     name: Analyze
