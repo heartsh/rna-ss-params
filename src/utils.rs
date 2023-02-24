@@ -5,97 +5,92 @@ pub use std::io::{BufReader, BufWriter};
 pub use std::path::Path;
 
 pub type Prob = f32;
-pub type FreeEnergy = Prob;
+pub type Score = Prob;
 pub type Base = usize;
-pub type BasePair = (Base, Base);
+pub type Basepair = (Base, Base);
 pub type Seq = Vec<Base>;
 
-pub type StackDeltaFes = [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-pub type HlTmDeltaFes = StackDeltaFes;
-pub type IlTmDeltaFes = HlTmDeltaFes;
-pub type MlTmDeltaFes = HlTmDeltaFes;
-pub type InitBlDeltaFes = [FreeEnergy; 31];
-pub type InitHlDeltaFes = [FreeEnergy; MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE + 1];
-pub type SpecialHlDeltaFes = [(Seq, FreeEnergy); NUM_OF_SPECIAL_HLS];
-pub type InitIlDeltaFes = [FreeEnergy; 31];
-pub type IlTmBonusDeltaFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
-pub type OneVs1IlDeltaFes = [[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-  NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-pub type OneVs2Il = (BasePair, Base);
-pub type OneVs2IlDeltaFes = [[[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-  NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-pub type TwoVs2Il = (BasePair, BasePair);
-pub type TwoVs2IlDeltaFes = [[[[[[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-  NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-  NUM_OF_BASES];
-pub type DeDeltaFes = [[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+pub type StackScores = [[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type TerminalMismatchScores = StackScores;
+pub type BulgeScoresInit = [Score; MAX_2LOOP_LEN + 1];
+pub type HairpinScoresInit = [Score; MAX_HAIRPIN_LEN_EXTRAPOLATION + 1];
+pub type HairpinScoresSpecial = [(Seq, Score); NUM_SPECIAL_HAIRPINS];
+pub type InteriorScoresInit = [Score; MAX_2LOOP_LEN + 1];
+pub type InteriorScoresBonus = [[Score; NUM_BASES]; NUM_BASES];
+pub type InteriorScores1x1 = [[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type Interior1x2 = (Basepair, Base);
+pub type InteriorScores1x2 = [[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type Interior2x2 = (Basepair, Basepair);
+pub type InteriorScores2x2 = [[[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  NUM_BASES];
+pub type DanglingScores = [[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
 
-pub type ContraBasePairFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
-pub type ContraTerminalMismatchFes =
-  [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-pub type ContraHlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN + 1];
-pub type ContraIlExplicitFes =
-  [[FreeEnergy; CONTRA_MAX_IL_EXPLICIT_LEN]; CONTRA_MAX_IL_EXPLICIT_LEN];
-pub type ContraBlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN];
-pub type ContraIlLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN - 1];
-pub type ContraIlSymmLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN / 2];
-pub type ContraIlAsymmLengthFes = [FreeEnergy; CONTRA_MAX_LOOP_LEN - 2];
-pub type ContraBl0x1Fes = [FreeEnergy; NUM_OF_BASES];
-pub type ContraIl1x1Fes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
-pub type ContraStackFes =
-  [[[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
-pub type ContraHelixClosingFes = [[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES];
-pub type ContraDangleFes = [[[FreeEnergy; NUM_OF_BASES]; NUM_OF_BASES]; NUM_OF_BASES];
+// CONTRAfold scoring parameters
+pub type BasepairScores = [[Score; NUM_BASES]; NUM_BASES];
+pub type HairpinScoresLen = [Score; MAX_LOOP_LEN + 1];
+pub type InteriorScoresExplicit =
+  [[Score; MAX_INTERIOR_EXPLICIT]; MAX_INTERIOR_EXPLICIT];
+pub type BulgeScoresLen = [Score; MAX_LOOP_LEN];
+pub type InteriorScoresLen = [Score; MAX_LOOP_LEN - 1];
+pub type InteriorScoresSymmetric = [Score; MAX_INTERIOR_SYMMETRIC];
+pub type InteriorScoresAsymmetric = [Score; MAX_INTERIOR_ASYMMETRIC];
+pub type BulgeScores0x1 = [Score; NUM_BASES];
+pub type InteriorScores1x1Contra = [[Score; NUM_BASES]; NUM_BASES];
+pub type HelixCloseScores = [[Score; NUM_BASES]; NUM_BASES];
 
 type Arg = String;
 pub type Args = Vec<Arg>;
+pub type Char = u8;
 
-pub const NUM_OF_TRANSITS: usize = 3;
-pub const CONST_4_INIT_ML_DELTA_FE: FreeEnergy = -INVERSE_TEMPERATURE * 9.3;
-pub const COEFFICIENT_4_TERM_OF_NUM_OF_BRANCHING_HELICES_ON_INIT_ML_DELTA_FE: FreeEnergy =
+pub const NUM_TRANSITS: usize = 3;
+pub const INIT_MULTIBRANCH_BASE: Score = -INVERSE_TEMPERATURE * 9.3;
+pub const COEFF_NUM_BRANCHES: Score =
   -INVERSE_TEMPERATURE * (-0.9);
-pub const HELIX_AU_OR_GU_END_PENALTY_DELTA_FE: FreeEnergy = -INVERSE_TEMPERATURE * 0.5;
-pub const MAX_NINIO: FreeEnergy = -INVERSE_TEMPERATURE * 3.;
-pub const COEFFICIENT_4_NINIO: FreeEnergy = -INVERSE_TEMPERATURE * 0.6;
-pub const GAS_CONST: FreeEnergy = 1.98717 / KILO; // The unit is [kcal / (K * mol)].
-pub const K0: FreeEnergy = 273.15; // The unit is [K].
-pub const TEMPERATURE: FreeEnergy = 37. + K0; // The unit is [K].
-pub const MAX_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_LOOP_DELTA_FE: usize = 1_000_000;
-pub const MAX_2_LOOP_LEN: usize = 30;
-pub const KILO: FreeEnergy = 1000.;
-pub const INVERSE_TEMPERATURE: FreeEnergy =
-  1. / (GAS_CONST as FreeEnergy * TEMPERATURE as FreeEnergy); // The unit is [K * mol / (kcal * K)] = [mol / kcal].
+pub const HELIX_AUGU_END_PENALTY: Score = -INVERSE_TEMPERATURE * 0.5;
+pub const NINIO_MAX: Score = -INVERSE_TEMPERATURE * 3.;
+pub const NINIO_COEFF: Score = -INVERSE_TEMPERATURE * 0.6;
+pub const GAS_CONST: Score = 1.98717 / KILO; // The unit is [kcal / (K * mol)]
+pub const K0: Score = 273.15; // The unit is [K]
+pub const TEMPERATURE: Score = 37. + K0; // The unit is [K]
+pub const MAX_HAIRPIN_LEN_EXTRAPOLATION: usize = 1_000_000;
+pub const MAX_2LOOP_LEN: usize = 30;
+pub const KILO: Score = 1000.;
+pub const INVERSE_TEMPERATURE: Score =
+  1. / (GAS_CONST as Score * TEMPERATURE as Score); // The unit is [K * mol / (kcal * K)] = [mol / kcal]
 pub const A: Base = 0;
 pub const C: Base = 1;
 pub const G: Base = 2;
 pub const U: Base = 3;
-pub const NUM_OF_BASES: usize = 4;
-pub const AA: BasePair = (A, A);
-pub const AC: BasePair = (A, C);
-pub const AG: BasePair = (A, G);
-pub const AU: BasePair = (A, U);
-pub const CA: BasePair = (C, A);
-pub const CC: BasePair = (C, C);
-pub const CG: BasePair = (C, G);
-pub const CU: BasePair = (C, U);
-pub const GA: BasePair = (G, A);
-pub const GC: BasePair = (G, C);
-pub const GG: BasePair = (G, G);
-pub const GU: BasePair = (G, U);
-pub const UA: BasePair = (U, A);
-pub const UC: BasePair = (U, C);
-pub const UG: BasePair = (U, G);
-pub const UU: BasePair = (U, U);
-pub const NEG_INF: FreeEnergy = -1_000_000_000_000_000.;
+pub const NUM_BASES: usize = 4;
+pub const AA: Basepair = (A, A);
+pub const AC: Basepair = (A, C);
+pub const AG: Basepair = (A, G);
+pub const AU: Basepair = (A, U);
+pub const CA: Basepair = (C, A);
+pub const CC: Basepair = (C, C);
+pub const CG: Basepair = (C, G);
+pub const CU: Basepair = (C, U);
+pub const GA: Basepair = (G, A);
+pub const GC: Basepair = (G, C);
+pub const GG: Basepair = (G, G);
+pub const GU: Basepair = (G, U);
+pub const UA: Basepair = (U, A);
+pub const UC: Basepair = (U, C);
+pub const UG: Basepair = (U, G);
+pub const UU: Basepair = (U, U);
+pub const NEG_INF: Score = -1_000_000_000_000_000.;
 
-pub const NUM_OF_SPECIAL_HLS: usize = 22;
-pub const MIN_HL_LEN: usize = 3;
-pub const MIN_SPAN_OF_INDEX_PAIR_CLOSING_HL: usize = MIN_HL_LEN + 2;
-pub const MIN_LOOP_LEN_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: usize = 10;
-pub const COEFFICIENT_4_LOG_EXTRAPOLATION_OF_INIT_HL_DELTA_FE: FreeEnergy =
+pub const NUM_SPECIAL_HAIRPINS: usize = 22;
+pub const MIN_HAIRPIN_LEN: usize = 3;
+pub const MIN_SPAN_HAIRPIN_CLOSE: usize = MIN_HAIRPIN_LEN + 2;
+pub const MIN_HAIRPIN_LEN_EXTRAPOLATION: usize = 10;
+pub const COEFF_HAIRPIN_LEN_EXTRAPOLATION: Score =
   -INVERSE_TEMPERATURE * 1.75 * GAS_CONST * TEMPERATURE; // The unit is [kcal / mol].
 lazy_static! {
-  pub static ref SPECIAL_HL_DELTA_FES: SpecialHlDeltaFes = {
+  pub static ref HAIRPIN_SCORES_SPECIAL: HairpinScoresSpecial = {
     [
       (vec![C, A, A, C, G], scale(6.8)),
       (vec![G, U, U, A, C], scale(6.9)),
@@ -123,20 +118,22 @@ lazy_static! {
   };
 }
 
-pub const CONTRA_MAX_LOOP_LEN: usize = 30;
-pub const CONTRA_MAX_IL_EXPLICIT_LEN: usize = 4;
+pub const MAX_LOOP_LEN: usize = 30;
+pub const MAX_INTERIOR_EXPLICIT: usize = 4;
+pub const MAX_INTERIOR_SYMMETRIC: usize = MAX_LOOP_LEN / 2;
+pub const MAX_INTERIOR_ASYMMETRIC: usize = MAX_LOOP_LEN - 2;
 
-pub const SMALL_A: u8 = b'a';
-pub const BIG_A: u8 = b'A';
-pub const SMALL_C: u8 = b'c';
-pub const BIG_C: u8 = b'C';
-pub const SMALL_G: u8 = b'g';
-pub const BIG_G: u8 = b'G';
-pub const SMALL_U: u8 = b'u';
-pub const BIG_U: u8 = b'U';
+pub const A_LOWER: u8 = b'a';
+pub const A_UPPER: u8 = b'A';
+pub const C_LOWER: u8 = b'c';
+pub const C_UPPER: u8 = b'C';
+pub const G_LOWER: u8 = b'g';
+pub const G_UPPER: u8 = b'G';
+pub const U_LOWER: u8 = b'u';
+pub const U_UPPER: u8 = b'U';
 
-pub fn scale(free_energy: FreeEnergy) -> FreeEnergy {
-  -INVERSE_TEMPERATURE * free_energy
+pub fn scale(x: Score) -> Score {
+  -INVERSE_TEMPERATURE * x
 }
 
 pub fn print_program_usage(program_name: &str, opts: &Options) {
@@ -144,12 +141,12 @@ pub fn print_program_usage(program_name: &str, opts: &Options) {
   print!("{}", opts.usage(&program_usage));
 }
 
-pub fn convert_char(c: u8) -> usize {
-  match c {
-    SMALL_A | BIG_A => A,
-    SMALL_C | BIG_C => C,
-    SMALL_G | BIG_G => G,
-    SMALL_U | BIG_U => U,
+pub fn char2base(x: Char) -> Base {
+  match x {
+    A_LOWER | A_UPPER => A,
+    C_LOWER | C_UPPER => C,
+    G_LOWER | G_UPPER => G,
+    U_LOWER | U_UPPER => U,
     _ => {
       panic!();
     }
