@@ -17,22 +17,20 @@ pub type HairpinScoresInit = [Score; MAX_HAIRPIN_LEN_EXTRAPOLATION + 1];
 pub type HairpinScoresSpecial = [(Seq, Score); NUM_SPECIAL_HAIRPINS];
 pub type InteriorScoresInit = [Score; MAX_2LOOP_LEN + 1];
 pub type InteriorScoresBonus = [[Score; NUM_BASES]; NUM_BASES];
-pub type InteriorScores1x1 = [[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
-  NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type InteriorScores1x1 =
+  [[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
 pub type Interior1x2 = (Basepair, Base);
-pub type InteriorScores1x2 = [[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
-  NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type InteriorScores1x2 =
+  [[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
 pub type Interior2x2 = (Basepair, Basepair);
-pub type InteriorScores2x2 = [[[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
+pub type InteriorScores2x2 = [[[[[[[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
-  NUM_BASES];
 pub type DanglingScores = [[[Score; NUM_BASES]; NUM_BASES]; NUM_BASES];
 
 // CONTRAfold scoring parameters
 pub type BasepairScores = [[Score; NUM_BASES]; NUM_BASES];
 pub type HairpinScoresLen = [Score; MAX_LOOP_LEN + 1];
-pub type InteriorScoresExplicit =
-  [[Score; MAX_INTERIOR_EXPLICIT]; MAX_INTERIOR_EXPLICIT];
+pub type InteriorScoresExplicit = [[Score; MAX_INTERIOR_EXPLICIT]; MAX_INTERIOR_EXPLICIT];
 pub type BulgeScoresLen = [Score; MAX_LOOP_LEN];
 pub type InteriorScoresLen = [Score; MAX_LOOP_LEN - 1];
 pub type InteriorScoresSymmetric = [Score; MAX_INTERIOR_SYMMETRIC];
@@ -47,8 +45,7 @@ pub type Char = u8;
 
 pub const NUM_TRANSITS: usize = 3;
 pub const INIT_MULTIBRANCH_BASE: Score = -INVERSE_TEMPERATURE * 9.3;
-pub const COEFF_NUM_BRANCHES: Score =
-  -INVERSE_TEMPERATURE * (-0.9);
+pub const COEFF_NUM_BRANCHES: Score = -INVERSE_TEMPERATURE * (-0.9);
 pub const HELIX_AUGU_END_PENALTY: Score = -INVERSE_TEMPERATURE * 0.5;
 pub const NINIO_MAX: Score = -INVERSE_TEMPERATURE * 3.;
 pub const NINIO_COEFF: Score = -INVERSE_TEMPERATURE * 0.6;
@@ -58,8 +55,7 @@ pub const TEMPERATURE: Score = 37. + K0; // The unit is [K]
 pub const MAX_HAIRPIN_LEN_EXTRAPOLATION: usize = 1_000_000;
 pub const MAX_2LOOP_LEN: usize = 30;
 pub const KILO: Score = 1000.;
-pub const INVERSE_TEMPERATURE: Score =
-  1. / (GAS_CONST as Score * TEMPERATURE as Score); // The unit is [K * mol / (kcal * K)] = [mol / kcal]
+pub const INVERSE_TEMPERATURE: Score = 1. / (GAS_CONST as Score * TEMPERATURE as Score); // The unit is [K * mol / (kcal * K)] = [mol / kcal]
 pub const A: Base = 0;
 pub const C: Base = 1;
 pub const G: Base = 2;

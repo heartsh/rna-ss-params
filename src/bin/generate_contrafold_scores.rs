@@ -30,8 +30,7 @@ fn main() {
   let mut basepair_scores: BasepairScores = [[0.; NUM_BASES]; NUM_BASES];
   let mut terminal_mismatch_scores: TerminalMismatchScores =
     [[[[0.; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
-  let mut stack_scores: StackScores =
-    [[[[0.; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut stack_scores: StackScores = [[[[0.; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   let mut helix_close_scores: HelixCloseScores = [[0.; NUM_BASES]; NUM_BASES];
   let mut dangling_scores_left: DanglingScores = [[[0.; NUM_BASES]; NUM_BASES]; NUM_BASES];
   let mut dangling_scores_right: DanglingScores = [[[0.; NUM_BASES]; NUM_BASES]; NUM_BASES];
@@ -84,8 +83,7 @@ fn main() {
         char2base(suffix_chars[2]),
         char2base(suffix_chars[3]),
       );
-      terminal_mismatch_scores[base_quad.0][base_quad.1][base_quad.2]
-        [base_quad.3] = feature_score;
+      terminal_mismatch_scores[base_quad.0][base_quad.1][base_quad.2][base_quad.3] = feature_score;
     } else if feature_name.starts_with("hairpin_length_at_least_") {
       let prefix = "hairpin_length_at_least_";
       let prefix_len = prefix.len();
@@ -154,10 +152,8 @@ fn main() {
         char2base(suffix_chars[2]),
         char2base(suffix_chars[3]),
       );
-      stack_scores[base_quad.0][base_quad.1][base_quad.2][base_quad.3] =
-        feature_score;
-      stack_scores[base_quad.3][base_quad.2][base_quad.1][base_quad.0] =
-        feature_score;
+      stack_scores[base_quad.0][base_quad.1][base_quad.2][base_quad.3] = feature_score;
+      stack_scores[base_quad.3][base_quad.2][base_quad.1][base_quad.0] = feature_score;
     } else if feature_name.starts_with("helix_closing_") {
       let prefix = "helix_closing_";
       let prefix_len = prefix.len();

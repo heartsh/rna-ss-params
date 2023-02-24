@@ -17,8 +17,7 @@ fn main() {
     "pub const BULGE_SCORES_INIT: BulgeScoresInit = {:?};\n",
     &bulge_scores_init
   );
-  let mut dangling_scores_3prime: DanglingScores =
-    [[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut dangling_scores_3prime: DanglingScores = [[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in &[
     ((AU, A), -0.7),
     ((AU, C), -0.1),
@@ -89,15 +88,12 @@ fn main() {
     .map(|&x| scale(x))
     .collect();
   let len_hairpin_scores_init = hairpin_scores_init.len();
-  let base_extrapolation =
-    hairpin_scores_init[MIN_HAIRPIN_LEN_EXTRAPOLATION - 1];
+  let base_extrapolation = hairpin_scores_init[MIN_HAIRPIN_LEN_EXTRAPOLATION - 1];
   for i in len_hairpin_scores_init..MAX_HAIRPIN_LEN_EXTRAPOLATION + 1 {
     hairpin_scores_init.push(
       base_extrapolation
         + COEFF_HAIRPIN_LEN_EXTRAPOLATION
-          * (i as Score
-            / (MIN_HAIRPIN_LEN_EXTRAPOLATION - 1) as Score)
-            .ln(),
+          * (i as Score / (MIN_HAIRPIN_LEN_EXTRAPOLATION - 1) as Score).ln(),
     );
   }
   buf += &format!(
@@ -115,8 +111,8 @@ fn main() {
     "pub const INTERIOR_SCORES_INIT: InteriorScoresInit = {:?};\n",
     &interior_scores_init
   );
-  let mut interior_scores_1x1 = [[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES];
-    NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut interior_scores_1x1 =
+    [[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in [
     ((AU, AA, AU), 1.9),
     ((AU, AC, AU), 1.9),
@@ -704,8 +700,8 @@ fn main() {
     &interior_scores_1x1
   );
 
-  let mut interior_scores_1x2 = [[[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES];
-    NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut interior_scores_1x2 = [[[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+    NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in [
     ((AU, (AA, A), AU), 3.7),
     ((AU, (AC, A), AU), 3.7),
@@ -3022,9 +3018,8 @@ fn main() {
     &interior_scores_1x2
   );
 
-  let mut interior_scores_2x2 = [[[[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut interior_scores_2x2 = [[[[[[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
     NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
-    NUM_BASES];
   for &(x, y) in [
     ((AU, (AA, AA), AU), 2.8),
     ((AU, (AA, AC), AU), 2.3),
@@ -12300,7 +12295,8 @@ fn main() {
     "pub const STACK_SCORES: StackScores = {:?};\n",
     &stack_scores
   );
-  let mut terminal_mismatch_scores_hairpin = [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut terminal_mismatch_scores_hairpin =
+    [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in [
     ((AU, AA), -0.3),
     ((AU, AC), -0.5),
@@ -12408,7 +12404,8 @@ fn main() {
     &terminal_mismatch_scores_hairpin
   );
 
-  let mut terminal_mismatch_scores_interior = [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut terminal_mismatch_scores_interior =
+    [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in [
     ((AU, AA), 0.7),
     ((AU, AC), 0.7),
@@ -12734,7 +12731,8 @@ fn main() {
     &terminal_mismatch_scores_2x3
   );
 
-  let mut terminal_mismatch_scores_multibranch = [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
+  let mut terminal_mismatch_scores_multibranch =
+    [[[[NEG_INF; NUM_BASES]; NUM_BASES]; NUM_BASES]; NUM_BASES];
   for &(x, y) in [
     ((AU, AA), -0.8),
     ((AU, AC), -1.0),
