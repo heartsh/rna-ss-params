@@ -32,8 +32,7 @@ jobs:
         working-directory: ./scripts
       - name: Check packaging
         run: |
-          cargo check --release -q
-          cargo package --allow-dirty -q
+          cargo package -q
 
   analyze:
     name: Analyze
