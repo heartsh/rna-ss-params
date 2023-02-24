@@ -3,6 +3,7 @@
 target
 !*.rs
 !*.yml
+!*.sh
 !Cargo.toml
 !rustfmt.toml
 !.gitignore

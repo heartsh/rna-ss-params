@@ -26,8 +26,7 @@ jobs:
       - name: Test
         run: |
           cargo install --path . -q
-          generate_turner_params
-          generate_contrafold_params -i ./assets/contrafold.params.complementary
+          ./generate_scores
           cargo check --release -q
           cargo package --allow-dirty -q
 
