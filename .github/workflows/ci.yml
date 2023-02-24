@@ -23,10 +23,15 @@ jobs:
     needs: preinstall
     steps:
       - uses: actions/checkout@v3
-      - name: Test
+      - name: Install
         run: |
           cargo install --path . -q
-          ./generate_scores
+      - name: Execute binaries
+        run: |
+          ./generate_scores.py
+        working-directory: ./scripts
+      - name: Reinstall
+        run: |
           cargo check --release -q
           cargo package --allow-dirty -q
 
