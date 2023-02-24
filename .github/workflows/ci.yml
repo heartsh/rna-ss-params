@@ -28,7 +28,7 @@ jobs:
           cargo install --path . -q
       - name: Execute binaries
         run: |
-          ./generate_scores.py
+          ./generate_scores.sh
         working-directory: ./scripts
       - name: Reinstall
         run: |
