@@ -30,7 +30,7 @@ jobs:
         run: |
           ./generate_scores.sh
         working-directory: ./scripts
-      - name: Reinstall
+      - name: Check packaging
         run: |
           cargo check --release -q
           cargo package --allow-dirty -q
